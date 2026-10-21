@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using LibraryDesk.Core.Domain;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -12,11 +12,15 @@ Loan loan = new()
 
 loan.AddItem(new LoanItem
 {
-    Isbn = "ISBN-001", Days = 14, DailyRate = 0.50m,
+    Isbn = "ISBN-001",
+    Days = 14,
+    DailyRate = 0.50m,
 });
 loan.AddItem(new LoanItem
 {
-    Isbn = "ISBN-002", Days = 7, DailyRate = 1.20m,
+    Isbn = "ISBN-002",
+    Days = 7,
+    DailyRate = 1.20m,
 });
 
 string total = loan.Total()
