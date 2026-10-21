@@ -16,9 +16,11 @@ public sealed class Loan
     public IReadOnlyList<LoanItem> Items => _items;
 
     /// <summary>Додає позицію до видачі.</summary>
+    /// <param name="item">Позиція видачі, яку потрібно додати.</param>
     public void AddItem(LoanItem item) => _items.Add(item);
 
     /// <summary>Обчислює підсумкову вартість видачі.</summary>
+    /// <returns>Сума вартості всіх позицій видачі.</returns>
     public decimal Total()
     {
         decimal sum = 0m;
