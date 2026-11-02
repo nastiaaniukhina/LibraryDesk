@@ -1,32 +1,14 @@
-using System.Globalization;
-using LibraryDesk.Core.Domain;
+using System.Text;
+using LibraryDesk.Core.Lending;
 
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+Console.OutputEncoding = new UTF8Encoding(false);
+Console.InputEncoding = new UTF8Encoding(false);
 
-Loan loan = new()
-{
-    Id = 1,
-    ReaderId = 10,
-    CreatedAt = DateTimeOffset.Now,
-};
-
-loan.AddItem(new LoanItem
-{
-    Isbn = "ISBN-001",
-    Days = 14,
-    DailyRate = 0.50m,
-});
-loan.AddItem(new LoanItem
-{
-    Isbn = "ISBN-002",
-    Days = 7,
-    DailyRate = 1.20m,
-});
-
-string total = loan.Total()
-    .ToString("F2", CultureInfo.InvariantCulture);
-
-Console.WriteLine($"Видача #{loan.Id}");
-Console.WriteLine($"Стан: {loan.Status}");
-Console.WriteLine($"Позицій: {loan.Items.Count}");
-Console.WriteLine($"Сума: {total}");
+zakaz z = new("L-1001", "Іваненко");
+z.Add("ISBN-001", 3, 250m);
+z.Add("ISBN-002", 12, 90m);
+Console.WriteLine(z.ProcessData(false));
+Console.WriteLine(z.ProcessData(true));
+Console.WriteLine(z.Ck());
+Console.WriteLine(z.Chg(1));
+Console.Write(z.Rep());
