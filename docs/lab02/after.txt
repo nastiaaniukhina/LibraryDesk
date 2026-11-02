@@ -1,7 +1,13 @@
-﻿2196,0
+﻿C:\Projects\LibraryDesk\LibraryDesk.Core\Lending\BookLoan.cs(45,19): warning CA1305: The behavior of 'int.ToString()' could vary based on the current user's locale settings. Replace this call in 'BookLoan.AddLine(string, int, decimal)' with a call to 'int.ToString(IFormatProvider)'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1305) [C:\Projects\LibraryDesk\LibraryDesk.Core\LibraryDesk.Core.csproj]
+C:\Projects\LibraryDesk\LibraryDesk.Core\Lending\BookLoan.cs(46,19): warning CA1305: The behavior of 'decimal.ToString()' could vary based on the current user's locale settings. Replace this call in 'BookLoan.AddLine(string, int, decimal)' with a call to 'decimal.ToString(IFormatProvider)'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1305) [C:\Projects\LibraryDesk\LibraryDesk.Core\LibraryDesk.Core.csproj]
+C:\Projects\LibraryDesk\LibraryDesk.Core\Lending\BookLoan.cs(58,28): warning CA1305: The behavior of 'int.Parse(string)' could vary based on the current user's locale settings. Replace this call in 'BookLoan.CalculateTotal(bool)' with a call to 'int.Parse(string, IFormatProvider)'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1305) [C:\Projects\LibraryDesk\LibraryDesk.Core\LibraryDesk.Core.csproj]
+C:\Projects\LibraryDesk\LibraryDesk.Core\Lending\BookLoan.cs(59,33): warning CA1305: The behavior of 'decimal.Parse(string)' could vary based on the current user's locale settings. Replace this call in 'BookLoan.CalculateTotal(bool)' with a call to 'decimal.Parse(string, IFormatProvider)'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1305) [C:\Projects\LibraryDesk\LibraryDesk.Core\LibraryDesk.Core.csproj]
+C:\Projects\LibraryDesk\LibraryDesk.Core\Lending\BookLoan.cs(139,33): warning CA1305: The behavior of 'int.Parse(string)' could vary based on the current user's locale settings. Replace this call in 'BookLoan.BuildReport()' with a call to 'int.Parse(string, IFormatProvider)'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1305) [C:\Projects\LibraryDesk\LibraryDesk.Core\LibraryDesk.Core.csproj]
+C:\Projects\LibraryDesk\LibraryDesk.Core\Lending\BookLoan.cs(139,59): warning CA1305: The behavior of 'decimal.Parse(string)' could vary based on the current user's locale settings. Replace this call in 'BookLoan.BuildReport()' with a call to 'decimal.Parse(string, IFormatProvider)'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1305) [C:\Projects\LibraryDesk\LibraryDesk.Core\LibraryDesk.Core.csproj]
+2196,0
 1976,40
 True
 True
-Книжка: ISBN-001; кількість: 3; ціна: 250; сума: 750
-Книжка: ISBN-002; кількість: 12; ціна: 90; сума: 1080
-Разом: 2196,0
+╨Ъ╨╜╨╕╨╢╨║╨░: ISBN-001; ╨║╤Ц╨╗╤М╨║╤Ц╤Б╤В╤М: 3; ╤Ж╤Ц╨╜╨░: 250; ╤Б╤Г╨╝╨░: 750
+╨Ъ╨╜╨╕╨╢╨║╨░: ISBN-002; ╨║╤Ц╨╗╤М╨║╤Ц╤Б╤В╤М: 12; ╤Ж╤Ц╨╜╨░: 90; ╤Б╤Г╨╝╨░: 1080
+╨а╨░╨╖╨╛╨╝: 2196,0
