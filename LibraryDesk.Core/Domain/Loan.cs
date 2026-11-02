@@ -5,20 +5,20 @@ public sealed class Loan
 {
     private readonly List<LoanItem> _items = new();
 
-    /// <summary>Номер видачі.</summary>
+    /// <summary>Gets or sets the loan identifier.</summary>
     public int Id { get; set; }
 
-    /// <summary>Номер читача.</summary>
+    /// <summary>Gets or sets the reader identifier.</summary>
     public int ReaderId { get; set; }
 
-    /// <summary>Поточний стан видачі.</summary>
+    /// <summary>Gets or sets the current loan status.</summary>
     public LoanStatus Status { get; set; }
 
-    /// <summary>Дата й час створення видачі.</summary>
+    /// <summary>Gets or sets the loan creation date and time.</summary>
     public DateTime CreatedAt { get; set; }
 
-    /// <summary>Позиції видачі (лише для читання).</summary>
-    public IReadOnlyList<LoanItem> Items { get; }
+    /// <summary>Gets the loan items.</summary>
+    public IReadOnlyList<LoanItem> Items => _items;
 
     /// <summary>Додає позицію до видачі.</summary>
     /// <param name="item">Позиція видачі, яку потрібно додати.</param>

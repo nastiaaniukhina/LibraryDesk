@@ -69,3 +69,6 @@ dotnet_diagnostic.SA1503.severity = warning
 dotnet_diagnostic.SA1516.severity = warning
 dotnet_diagnostic.IDE0055.severity = warning
 dotnet_sort_system_directives_first = true
+
+# CA1305: Parse/ToString без культури. Пункт 3 реєстру боргу, виправимо в ЛР № 3
+dotnet_diagnostic.CA1305.severity = suggestion

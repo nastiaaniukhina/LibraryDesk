@@ -3,16 +3,15 @@ namespace LibraryDesk.Core.Domain;
 /// <summary>Книжка в каталозі бібліотеки.</summary>
 public sealed class Book
 {
-    /// <summary>Міжнародний номер книжки (ISBN).</summary>
+    /// <summary>Gets the book ISBN.</summary>
     public string Isbn { get; init; } = string.Empty;
 
-    /// <summary>Назва книжки.</summary>
+    /// <summary>Gets the book title.</summary>
     public string Title { get; init; } = string.Empty;
 
-    /// <summary>Автор книжки.</summary>
+    /// <summary>Gets the book author.</summary>
     public string Author { get; init; } = string.Empty;
 
-    /// <summary>Денний тариф користування, грн.</summary>
-    public decimal DailyRate { get; init; }  
-
+    /// <summary>Gets the daily usage rate in UAH.</summary>
+    public decimal DailyRate { get; init; }
 }

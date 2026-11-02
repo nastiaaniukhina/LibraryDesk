@@ -1,4 +1,3 @@
-
 namespace LibraryDesk.Core.Lending;
 
 /// <summary>
@@ -47,7 +46,7 @@ public class BookLoan
 
     private readonly List<string[]> _lines = new List<string[]>();
 
-    /// <summary>Створює нову видачу у початковому стані.</summary>
+    /// <summary>Initializes a new instance of the <see cref="BookLoan"/> class.</summary>
     /// <param name="id">Номер видачі.</param>
     /// <param name="readerName">Прізвище читача.</param>
     public BookLoan(string id, string readerName)
@@ -57,16 +56,16 @@ public class BookLoan
         CreatedAt = DateTime.Now;
     }
 
-    /// <summary>Номер видачі.</summary>
+    /// <summary>Gets the loan number.</summary>
     public string Id { get; private set; }
 
-    /// <summary>Прізвище читача.</summary>
+    /// <summary>Gets the reader's surname.</summary>
     public string ReaderName { get; private set; }
 
-    /// <summary>Поточний стан видачі.</summary>
+    /// <summary>Gets the current loan status.</summary>
     public int Status { get; private set; }
 
-    /// <summary>Дата й час створення видачі.</summary>
+    /// <summary>Gets the loan creation date and time.</summary>
     public DateTime CreatedAt { get; private set; }
 
     /// <summary>Шукає видачу за номером.</summary>
