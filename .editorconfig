@@ -45,9 +45,9 @@ dotnet_diagnostic.SA1200.severity = none
 # приватні поля іменуємо з _, як прийнято в .NET
 dotnet_diagnostic.SA1309.severity = none
 
-# XML-документацію вимагатимемо з ЛР № 4, поки що ні
+# XML-документація обов'язкова для публічних членів (ЛР № 2)
 dotnet_diagnostic.SA0001.severity = none
-dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1600.severity = warning
 dotnet_diagnostic.SA1601.severity = none
 dotnet_diagnostic.SA1602.severity = none
 

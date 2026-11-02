@@ -3,11 +3,15 @@ namespace LibraryDesk.Core.Domain;
 /// <summary>Позиція видачі: книжка, строк у днях і денний тариф.</summary>
 public sealed class LoanItem
 {
-    public string Isbn { get; init; } = string.Empty;
+    /// <summary>Код книжки (ISBN).</summary>
+    public string Isbn { get; set; }
 
-    public int Days { get; init; }
+    /// <summary>Кількість днів видачі.</summary>
+    public int Days { get; set; }
 
-    public decimal DailyRate { get; init; }
+    /// <summary>Денний тариф, грн.</summary>
+    public decimal DailyRate { get; set; }
 
-    public decimal Amount => Days * DailyRate;
+    /// <summary>Вартість позиції, грн.</summary>
+    public decimal Amount { get; set; }
 }
