@@ -1,8 +1,4 @@
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace LibraryDesk.Core.Lending;
 
 /// <summary>
@@ -10,6 +6,45 @@ namespace LibraryDesk.Core.Lending;
 /// </summary>
 public class BookLoan
 {
+    /// <summary>Стан «заброньовано» (початковий).</summary>
+    public const int StatusReserved = 0;
+
+    /// <summary>Стан «видано».</summary>
+    public const int StatusIssued = 1;
+
+    /// <summary>Стан «повернено».</summary>
+    public const int StatusReturned = 2;
+
+    /// <summary>Стан «скасовано».</summary>
+    public const int StatusCancelled = 3;
+
+    /// <summary>Ставка податку на додану вартість.</summary>
+    private const decimal VatRate = 0.2m;
+
+    /// <summary>Поріг суми для знижки постійному читачу.</summary>
+    private const decimal RegularDiscountThreshold = 1000m;
+
+    /// <summary>Частка знижки постійному читачу.</summary>
+    private const decimal RegularDiscountRate = 0.10m;
+
+    /// <summary>Поріг суми для знижки на велику видачу.</summary>
+    private const decimal LargeOrderThreshold = 5000m;
+
+    /// <summary>Частка знижки на велику видачу.</summary>
+    private const decimal LargeOrderDiscountRate = 0.15m;
+
+    /// <summary>Кількість рядків, з якої діє гуртова знижка.</summary>
+    private const int BulkLineCount = 10;
+
+    /// <summary>Сума гуртової знижки, грн.</summary>
+    private const decimal BulkDiscountAmount = 100m;
+
+    /// <summary>Найбільша допустима кількість рядків видачі.</summary>
+    private const int MaxLineCount = 100;
+
+    /// <summary>Найкоротша допустима довжина прізвища читача.</summary>
+    private const int MinReaderNameLength = 3;
+
     private readonly List<string[]> _lines = new List<string[]>();
 
     /// <summary>Створює нову видачу у початковому стані.</summary>
@@ -83,18 +118,18 @@ public class BookLoan
         }
 
         // Знижки не поєднуються: діє лише перша з підходящих
-        if (isRegularReader == true && total > 1000)
+        if (isRegularReader && total > RegularDiscountThreshold)
         {
-            total = total * 0.9m;
+            total *= 1m - RegularDiscountRate;
         }
-        else if (total > 5000)
+        else if (total > LargeOrderThreshold)
         {
-            total = total * 0.85m;
+            total *= 1m - LargeOrderDiscountRate;
         }
 
-        if (lineCount > 10)
+        if (lineCount > BulkLineCount)
         {
-            total = total - 100;
+            total -= BulkDiscountAmount;
         }
 
         if (total < 0)
@@ -103,7 +138,7 @@ public class BookLoan
         }
 
         // ПДВ нараховується на суму вже після всіх знижок
-        total = total + total * 0.2m;
+        total += total * VatRate;
         return Math.Round(total, 2);
     }
 
@@ -116,21 +151,21 @@ public class BookLoan
     /// </returns>
     public bool TryChangeStatus(int newStatus)
     {
-        if (Status == 0 && newStatus == 1)
+        if (Status == StatusReserved && newStatus == StatusIssued)
         {
-            Status = 1;
+            Status = StatusIssued;
             return true;
         }
 
-        if (Status == 1 && newStatus == 2)
+        if (Status == StatusIssued && newStatus == StatusReturned)
         {
-            Status = 2;
+            Status = StatusReturned;
             return true;
         }
 
-        if (Status == 0 && newStatus == 3)
+        if (Status == StatusReserved && newStatus == StatusCancelled)
         {
-            Status = 3;
+            Status = StatusCancelled;
             return true;
         }
 
@@ -143,11 +178,11 @@ public class BookLoan
     {
         if (Id is not null && Id.Length > 0
             && ReaderName is not null
-            && ReaderName.Length > 2
+            && ReaderName.Length >= MinReaderNameLength
             && _lines.Count > 0
-            && _lines.Count < 100
-            && Status >= 0
-            && Status <= 3)
+            && _lines.Count < MaxLineCount
+            && Status >= StatusReserved
+            && Status <= StatusCancelled)
         {
             return true;
         }
