@@ -26,6 +26,14 @@ csharp_style_var_for_built_in_types = false:suggestion
 dotnet_naming_rule.priv_underscore.symbols = priv_field
 dotnet_naming_rule.priv_underscore.style = underscore_camel
 dotnet_naming_rule.priv_underscore.severity = warning
+# константи (будь-яка доступність): PascalCase, без префікса _
+dotnet_naming_rule.constants_pascal.symbols = constant_fields
+dotnet_naming_rule.constants_pascal.style = pascal_case_style
+dotnet_naming_rule.constants_pascal.severity = warning
+dotnet_naming_symbols.constant_fields.applicable_kinds = field
+dotnet_naming_symbols.constant_fields.applicable_accessibilities = *
+dotnet_naming_symbols.constant_fields.required_modifiers = const
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 dotnet_naming_symbols.priv_field.applicable_kinds = field
 dotnet_naming_symbols.priv_field.applicable_accessibilities = private
 dotnet_naming_style.underscore_camel.capitalization = camel_case
@@ -45,9 +53,9 @@ dotnet_diagnostic.SA1200.severity = none
 # приватні поля іменуємо з _, як прийнято в .NET
 dotnet_diagnostic.SA1309.severity = none
 
-# XML-документацію вимагатимемо з ЛР № 4, поки що ні
+# XML-документація обов'язкова для публічних членів (ЛР № 2)
 dotnet_diagnostic.SA0001.severity = none
-dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1600.severity = warning
 dotnet_diagnostic.SA1601.severity = none
 dotnet_diagnostic.SA1602.severity = none
 
@@ -60,3 +68,7 @@ dotnet_diagnostic.SA1201.severity = warning
 dotnet_diagnostic.SA1503.severity = warning
 dotnet_diagnostic.SA1516.severity = warning
 dotnet_diagnostic.IDE0055.severity = warning
+dotnet_sort_system_directives_first = true
+
+# CA1305: Parse/ToString без культури. Пункт 3 реєстру боргу, виправимо в ЛР № 3
+dotnet_diagnostic.CA1305.severity = suggestion

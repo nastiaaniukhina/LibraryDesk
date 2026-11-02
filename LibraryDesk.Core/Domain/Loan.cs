@@ -5,14 +5,19 @@ public sealed class Loan
 {
     private readonly List<LoanItem> _items = new();
 
-    public int Id { get; init; }
+    /// <summary>Gets or sets the loan identifier.</summary>
+    public int Id { get; set; }
 
-    public int ReaderId { get; init; }
+    /// <summary>Gets or sets the reader identifier.</summary>
+    public int ReaderId { get; set; }
 
-    public LoanStatus Status { get; set; } = LoanStatus.Reserved;
+    /// <summary>Gets or sets the current loan status.</summary>
+    public LoanStatus Status { get; set; }
 
-    public DateTimeOffset CreatedAt { get; init; }
+    /// <summary>Gets or sets the loan creation date and time.</summary>
+    public DateTime CreatedAt { get; set; }
 
+    /// <summary>Gets the loan items.</summary>
     public IReadOnlyList<LoanItem> Items => _items;
 
     /// <summary>Додає позицію до видачі.</summary>

@@ -3,9 +3,12 @@ namespace LibraryDesk.Core.Domain;
 /// <summary>Читач бібліотеки.</summary>
 public sealed class Reader
 {
-    public int Id { get; init; }
+    /// <summary>Gets or sets the reader's unique identifier.</summary>
+    public int Id { get; set; }
 
-    public string Name { get; init; } = string.Empty;
+    /// <summary>Gets or sets the reader's full name.</summary>
+    public string Name { get; set; } = string.Empty;
 
-    public bool IsStudent { get; init; }
+    /// <summary>Gets or sets a value indicating whether the reader is a student.</summary>
+    public bool IsStudent { get; set; }
 }
