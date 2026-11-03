@@ -1,5 +1,6 @@
 using System.Text;
 using LibraryDesk.Core.Lending;
+using LibraryDesk.Core.Reporting;
 
 Console.OutputEncoding = new UTF8Encoding(false);
 Console.InputEncoding = new UTF8Encoding(false);
@@ -26,4 +27,6 @@ LoanTotalRequest request = new(
     Status: LoanFormStatus.Reserved,
     DeliveryPrice: 60m);
 LoanTotalResult result = LoanTotalCalculator.Calculate(request);
-Console.WriteLine(result.Total);
+string report = LoanReport.TextOf(request, result);
+LoanReportPrinter printer = new(Console.Out);
+printer.Print(report);
