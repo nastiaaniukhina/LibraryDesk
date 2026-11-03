@@ -113,57 +113,23 @@ public static class LoanTotalCalculator
         };
     }
 
-    /// <summary>Диспетчер: викликає кроки розрахунку в потрібному порядку.</summary>
-    /// <param name="docId">Номер видачі.</param>
-    /// <param name="clientName">Прізвище читача.</param>
-    /// <param name="clientEmail">Пошта читача.</param>
-    /// <param name="isRegular">Чи є читач постійним.</param>
-    /// <param name="lines">Рядки видачі.</param>
-    /// <param name="createdAt">Дата створення видачі.</param>
-    /// <param name="couponCode">Код купона або null.</param>
-    /// <param name="status">Поточний стан видачі.</param>
-    /// <param name="printToConsole">Чи друкувати звіт у консоль.</param>
-    /// <param name="deliveryPrice">Вартість доставки.</param>
-    /// <param name="newStatus">Стан видачі після розрахунку.</param>
-    /// <returns>Підсумок видачі.</returns>
-    public static decimal Process(
-        int docId,
-        string clientName,
-        string clientEmail,
-        bool isRegular,
-        IReadOnlyList<LoanLine> lines,
-        DateOnly createdAt,
-        string? couponCode,
-        LoanFormStatus status,
-        bool printToConsole,
-        decimal deliveryPrice,
-        out LoanFormStatus newStatus)
+    /// <summary>Рахує підсумок видачі й наступний стан формуляра.</summary>
+    /// <param name="request">Запит на розрахунок.</param>
+    /// <returns>Підсумок і стан видачі після розрахунку.</returns>
+    public static LoanTotalResult Calculate(LoanTotalRequest request)
     {
-        LoanGuards.EnsureHeaderValid(docId, clientName, clientEmail);
-        decimal total = SubtotalOf(lines);
-        total -= ClientDiscountOf(total, isRegular);
+        LoanGuards.EnsureRequestValid(request);
+
+        decimal total = SubtotalOf(request.Lines);
+        total -= ClientDiscountOf(total, request.Reader.IsRegular);
         total -= VolumeDiscountOf(total);
-        total -= CouponDiscountOf(total, couponCode);
-        total -= WeekendDiscountOf(total, createdAt);
-        total += DeliveryFeeOf(total, deliveryPrice);
-        total = status == LoanFormStatus.Cancelled
+        total -= CouponDiscountOf(total, request.CouponCode);
+        total -= WeekendDiscountOf(total, request.CreatedAt);
+        total += DeliveryFeeOf(total, request.DeliveryPrice);
+        total = request.Status == LoanFormStatus.Cancelled
             ? 0m
             : Math.Round(Math.Max(total, 0m), 2);
-        newStatus = NextStatusOf(status, total);
-
-        if (printToConsole)
-        {
-            Console.WriteLine("Видача № " + docId);
-            Console.WriteLine("Читач: " + clientName);
-            foreach (LoanLine line in lines)
-            {
-                Console.WriteLine(line.Isbn + " x " + line.Quantity);
-            }
-
-            Console.WriteLine("Разом: " + total);
-            Console.WriteLine("Стан: " + newStatus);
-        }
-
-        return total;
+        return new LoanTotalResult(
+            total, NextStatusOf(request.Status, total));
     }
 }

@@ -50,4 +50,16 @@ public static class LoanGuards
             EnsureLineValid(line);
         }
     }
+
+    /// <summary>Перевіряє весь запит на розрахунок підсумку.</summary>
+    /// <param name="request">Запит на розрахунок.</param>
+    public static void EnsureRequestValid(LoanTotalRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        ArgumentNullException.ThrowIfNull(request.Reader);
+        EnsureHeaderValid(
+            request.LoanId, request.Reader.Name, request.Reader.Email);
+        EnsureLinesValid(request.Lines);
+        ArgumentOutOfRangeException.ThrowIfNegative(request.DeliveryPrice);
+    }
 }

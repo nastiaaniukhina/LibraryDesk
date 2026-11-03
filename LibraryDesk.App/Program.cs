@@ -12,3 +12,18 @@ Console.WriteLine(loan.CalculateTotal(true));
 Console.WriteLine(loan.IsValid());
 Console.WriteLine(loan.TryChangeStatus(1));
 Console.Write(loan.BuildReport());
+Console.WriteLine();
+LoanTotalRequest request = new(
+    LoanId: 1001,
+    Reader: new ReaderInfo("Іваненко", "ivanenko@ex.com", true),
+    Lines: new List<LoanLine>
+    {
+        new() { Isbn = "ISBN-001", Quantity = 12, UnitPrice = 100m },
+        new() { Isbn = "ISBN-002", Quantity = 1, UnitPrice = 250m },
+    },
+    CreatedAt: new DateOnly(2026, 3, 10),
+    CouponCode: null,
+    Status: LoanFormStatus.Reserved,
+    DeliveryPrice: 60m);
+LoanTotalResult result = LoanTotalCalculator.Calculate(request);
+Console.WriteLine(result.Total);
