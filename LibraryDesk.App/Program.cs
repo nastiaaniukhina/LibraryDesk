@@ -1,32 +1,47 @@
-using System.Text;
-using LibraryDesk.Core.Lending;
-using LibraryDesk.Core.Reporting;
+using System.Globalization;
+using LibraryDesk.Core.Abstractions;
+using LibraryDesk.Core.Domain;
+using LibraryDesk.Core.Notifications;
+using LibraryDesk.Core.Pricing;
+using LibraryDesk.Core.Reports;
+using LibraryDesk.Core.Services;
+using LibraryDesk.Core.Storage;
 
-Console.OutputEncoding = new UTF8Encoding(false);
-Console.InputEncoding = new UTF8Encoding(false);
+Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-BookLoan loan = new("L-1001", "Іваненко");
-loan.AddLine("ISBN-001", 3, 250m);
-loan.AddLine("ISBN-002", 12, 90m);
-Console.WriteLine(loan.CalculateTotal(false));
-Console.WriteLine(loan.CalculateTotal(true));
-Console.WriteLine(loan.IsValid());
-Console.WriteLine(loan.TryChangeStatus(1));
-Console.Write(loan.BuildReport());
-Console.WriteLine();
-LoanTotalRequest request = new(
-    LoanId: 1001,
-    Reader: new ReaderInfo("Іваненко", "ivanenko@ex.com", true),
-    Lines: new List<LoanLine>
-    {
-        new() { Isbn = "ISBN-001", Quantity = 12, UnitPrice = 100m },
-        new() { Isbn = "ISBN-002", Quantity = 1, UnitPrice = 250m },
-    },
-    CreatedAt: new DateOnly(2026, 3, 10),
-    CouponCode: null,
-    Status: LoanFormStatus.Reserved,
-    DeliveryPrice: 60m);
-LoanTotalResult result = LoanTotalCalculator.Calculate(request);
-string report = LoanReport.TextOf(request, result);
-LoanReportPrinter printer = new(Console.Out);
-printer.Print(report);
+// Композиційний корінь: єдине місце, де створюються конкретні реалізації.
+string readerType = args.Length > 0 ? args[0] : "student";
+
+Dictionary<string, IFeePolicy> policies = new()
+{
+    ["regular"] = new DiscountFeePolicy(0.05m),
+    ["student"] = new StudentFeePolicy(),
+    ["staff"] = new DiscountFeePolicy(0.30m),
+};
+
+IFeePolicy policy = policies.TryGetValue(readerType, out IFeePolicy? found)
+    ? found
+    : new StandardFeePolicy();
+
+InMemoryLoanRepository repository = new();
+TextWriterNotifier notifier = new(Console.Out);
+LoanService service = new(repository, policy, notifier);
+
+// Сценарій
+DateTimeOffset now = DateTimeOffset.Now;
+Reader reader = new(10, "Іваненко Іван", "ivan@example.com") { IsStudent = true };
+Loan loan = new(1, reader.Id, now);
+loan.AddItem(new LoanItem("ISBN-001", 14, 0.50m));
+loan.AddItem(new LoanItem("ISBN-002", 7, 1.20m));
+service.Place(loan, reader);
+loan.Issue(now);
+
+string total = service.TotalOf(loan).ToString("F2", CultureInfo.InvariantCulture);
+Console.WriteLine($"Видача #{loan.Id}, політика: {readerType}");
+Console.WriteLine($"Стан: {loan.Status}");
+Console.WriteLine($"Сума: {total}");
+
+loan.Return();
+ArchivedLoan archived = new(loan, now);
+Console.WriteLine($"Архів: видача #{archived.Id}, стан {archived.Status}");
+Console.Write(LoanCsvReport.BuildCsv(repository.GetAll(), service.TotalOf));
