@@ -1,3 +1,4 @@
+
 using LibraryDesk.Core.Abstractions;
 using LibraryDesk.Core.Domain;
 using LibraryDesk.Core.Errors;
@@ -65,27 +66,25 @@ public sealed class LoanService
         return total;
     }
 
-    /// <summary>Додає позицію до видачі, розбираючи сирі рядки.</summary>
+    /// <summary>Додає типізовану позицію до заброньованої видачі.</summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
-    /// <param name="isbn">ISBN книжки.</param>
-    /// <param name="days">Кількість днів, рядок.</param>
-    /// <param name="dailyRate">Добова ставка, рядок.</param>
-    public void AddItem(
-        int loanId,
-        string isbn,
-        string days,
-        string dailyRate)
+    /// <param name="item">Позиція видачі.</param>
+    public void AddItem(int loanId, LoanItem item)
     {
-        Loan? loan = _repository.GetById(loanId);
+        ArgumentNullException.ThrowIfNull(item);
 
-        if (loan is null)
+        Loan loan = _repository.GetById(loanId)
+            ?? throw new DomainRuleException(
+                "loan.exists",
+                $"Видачу {loanId} не знайдено");
+
+        if (loan.Status != LoanStatus.Reserved)
         {
-            throw new LoanNotFoundException(loanId);
+            throw new DomainRuleException(
+                "loan.editable",
+                $"Стан {loan.Status} не дозволяє додавати позиції");
         }
 
-        int d = int.Parse(days);
-        decimal r = decimal.Parse(dailyRate);
-
-        loan.AddItem(new LoanItem(isbn, d, r));
+        loan.AddItem(item);
     }
 }

@@ -1,3 +1,4 @@
+
 namespace LibraryDesk.Core.Lending;
 
 /// <summary>
@@ -17,34 +18,17 @@ public class BookLoan
     /// <summary>Стан «скасовано».</summary>
     public const int StatusCancelled = 3;
 
-    /// <summary>Ставка податку на додану вартість.</summary>
     private const decimal VatRate = 0.2m;
-
-    /// <summary>Поріг суми для знижки постійному читачу.</summary>
     private const decimal RegularDiscountThreshold = 1000m;
-
-    /// <summary>Частка знижки постійному читачу.</summary>
     private const decimal RegularDiscountRate = 0.10m;
-
-    /// <summary>Поріг суми для знижки на велику видачу.</summary>
     private const decimal LargeOrderThreshold = 5000m;
-
-    /// <summary>Частка знижки на велику видачу.</summary>
     private const decimal LargeOrderDiscountRate = 0.15m;
-
-    /// <summary>Кількість рядків, з якої діє гуртова знижка.</summary>
     private const int BulkLineCount = 10;
-
-    /// <summary>Сума гуртової знижки, грн.</summary>
     private const decimal BulkDiscountAmount = 100m;
-
-    /// <summary>Найбільша допустима кількість рядків видачі.</summary>
     private const int MaxLineCount = 100;
-
-    /// <summary>Найкоротша допустима довжина прізвища читача.</summary>
     private const int MinReaderNameLength = 3;
 
-    private readonly List<string[]> _lines = new List<string[]>();
+    private readonly List<(string Isbn, int Quantity, decimal UnitPrice)> _lines = new();
 
     /// <summary>Initializes a new instance of the <see cref="BookLoan"/> class.</summary>
     /// <param name="id">Номер видачі.</param>
@@ -91,11 +75,7 @@ public class BookLoan
     /// <param name="unitPrice">Ціна за одиницю, грн.</param>
     public void AddLine(string isbn, int quantity, decimal unitPrice)
     {
-        string[] line = new string[3];
-        line[0] = isbn;
-        line[1] = quantity.ToString();
-        line[2] = unitPrice.ToString();
-        _lines.Add(line);
+        _lines.Add((isbn, quantity, unitPrice));
     }
 
     /// <summary>
@@ -110,10 +90,8 @@ public class BookLoan
 
         for (int i = 0; i < _lines.Count; i++)
         {
-            int quantity = int.Parse(_lines[i][1]);
-            decimal unitPrice = decimal.Parse(_lines[i][2]);
-            total = total + (quantity * unitPrice);
-            lineCount = lineCount + 1;
+            total += _lines[i].Quantity * _lines[i].UnitPrice;
+            lineCount++;
         }
 
         // Знижки не поєднуються: діє лише перша з підходящих
@@ -197,10 +175,10 @@ public class BookLoan
 
         for (int i = 0; i < _lines.Count; i++)
         {
-            report = report + "Книжка: " + _lines[i][0]
-                + "; кількість: " + _lines[i][1]
-                + "; ціна: " + _lines[i][2]
-                + "; сума: " + (int.Parse(_lines[i][1]) * decimal.Parse(_lines[i][2])) + "\n";
+            report = report + "Книжка: " + _lines[i].Isbn
+                + "; кількість: " + _lines[i].Quantity
+                + "; ціна: " + _lines[i].UnitPrice
+                + "; сума: " + (_lines[i].Quantity * _lines[i].UnitPrice) + "\n";
         }
 
         report = report + "Разом: " + CalculateTotal(false) + "\n";
