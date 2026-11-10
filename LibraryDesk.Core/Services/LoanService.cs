@@ -1,5 +1,6 @@
 using LibraryDesk.Core.Abstractions;
 using LibraryDesk.Core.Domain;
+using LibraryDesk.Core.Errors;
 
 namespace LibraryDesk.Core.Services;
 
@@ -14,7 +15,10 @@ public sealed class LoanService
     /// <param name="repository">Сховище видач.</param>
     /// <param name="feePolicy">Політика розрахунку плати.</param>
     /// <param name="notifier">Сповіщувач.</param>
-    public LoanService(ILoanRepository repository, IFeePolicy feePolicy, INotifier notifier)
+    public LoanService(
+        ILoanRepository repository,
+        IFeePolicy feePolicy,
+        INotifier notifier)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(feePolicy);
@@ -32,9 +36,12 @@ public sealed class LoanService
     {
         ArgumentNullException.ThrowIfNull(loan);
         ArgumentNullException.ThrowIfNull(reader);
+
         if (loan.ReaderId != reader.Id)
         {
-            throw new ArgumentException("Видача належить іншому читачеві.", nameof(reader));
+            throw new ArgumentException(
+                "Видача належить іншому читачеві.",
+                nameof(reader));
         }
 
         _repository.Add(loan);
@@ -49,11 +56,36 @@ public sealed class LoanService
         ArgumentNullException.ThrowIfNull(loan);
 
         decimal total = 0m;
+
         foreach (LoanItem item in loan.Items)
         {
             total += _feePolicy.PriceOf(item);
         }
 
         return total;
+    }
+
+    /// <summary>Додає позицію до видачі, розбираючи сирі рядки.</summary>
+    /// <param name="loanId">Ідентифікатор видачі.</param>
+    /// <param name="isbn">ISBN книжки.</param>
+    /// <param name="days">Кількість днів, рядок.</param>
+    /// <param name="dailyRate">Добова ставка, рядок.</param>
+    public void AddItem(
+        int loanId,
+        string isbn,
+        string days,
+        string dailyRate)
+    {
+        Loan? loan = _repository.GetById(loanId);
+
+        if (loan is null)
+        {
+            throw new LoanNotFoundException(loanId);
+        }
+
+        int d = int.Parse(days);
+        decimal r = decimal.Parse(dailyRate);
+
+        loan.AddItem(new LoanItem(isbn, d, r));
     }
 }
