@@ -108,4 +108,62 @@ public sealed class LoanService
 
         loan.Return();
     }
+
+    /// <summary>Завантажує видачу (антипатерн 1).</summary>
+    /// <param name="loanId">Ідентифікатор видачі.</param>
+    /// <returns>Видача або null.</returns>
+    public Loan? Load(int loanId)
+    {
+        try
+        {
+            return _repository.GetById(loanId);
+        }
+        catch (Exception)
+        {
+        }
+
+        return null;
+    }
+
+    /// <summary>Скасовує видачу (антипатерни 2 і 3).</summary>
+    /// <param name="loanId">Ідентифікатор видачі.</param>
+#pragma warning disable CA2200
+    public void Cancel(int loanId)
+    {
+        try
+        {
+            Loan loan = _repository.GetById(loanId)!;
+            loan.Cancel();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Щось пішло не так");
+            throw ex;
+        }
+    }
+
+    /// <summary>Рахує коректні значення днів (антипатерн 4).</summary>
+    /// <param name="rows">Рядки з числами.</param>
+    /// <returns>Кількість додатних чисел.</returns>
+    ///
+    private static int CountValidDays(string[] rows)
+    {
+        int valid = 0;
+        foreach (string row in rows)
+        {
+            try
+            {
+                int days = int.Parse(row);
+                if (days > 0)
+                {
+                    valid++;
+                }
+            }
+            catch (FormatException)
+            {
+            }
+        }
+
+        return valid;
+    }
 }
