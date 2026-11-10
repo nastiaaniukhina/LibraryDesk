@@ -240,4 +240,15 @@ public sealed class LoanService
             throw;
         }
     }
+
+    /// <summary>Зберігає звіт про видачу у файл.</summary>
+    /// <param name="path">Шлях до файлу.</param>
+    /// <param name="loan">Видача.</param>
+    public void ExportReport(string path, Loan loan)
+    {
+        StreamWriter writer = new(path);
+        writer.WriteLine($"Видача {loan.Id}");
+        writer.WriteLine(TotalOf(loan));
+        writer.Close();
+    }
 }
