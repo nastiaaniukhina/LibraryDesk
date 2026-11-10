@@ -1,6 +1,8 @@
 using LibraryDesk.Core.Abstractions;
 using LibraryDesk.Core.Domain;
 using LibraryDesk.Core.Errors;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace LibraryDesk.Core.Services;
 
@@ -10,15 +12,18 @@ public sealed class LoanService
     private readonly ILoanRepository _repository;
     private readonly IFeePolicy _feePolicy;
     private readonly INotifier _notifier;
+    private readonly ILogger<LoanService> _log;
 
     /// <summary>Initializes a new instance of the <see cref="LoanService"/> class.</summary>
     /// <param name="repository">Сховище видач.</param>
     /// <param name="feePolicy">Політика розрахунку плати.</param>
     /// <param name="notifier">Сповіщувач.</param>
+    /// <param name="logger">Логер; якщо не передано, журнал не ведеться.</param>
     public LoanService(
-        ILoanRepository repository,
-        IFeePolicy feePolicy,
-        INotifier notifier)
+    ILoanRepository repository,
+    IFeePolicy feePolicy,
+    INotifier notifier,
+    ILogger<LoanService>? logger = null)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(feePolicy);
@@ -27,6 +32,7 @@ public sealed class LoanService
         _repository = repository;
         _feePolicy = feePolicy;
         _notifier = notifier;
+        _log = logger ?? NullLogger<LoanService>.Instance;
     }
 
     /// <summary>Реєструє видачу й повідомляє читача.</summary>
