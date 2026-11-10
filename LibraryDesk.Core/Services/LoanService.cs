@@ -6,7 +6,9 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace LibraryDesk.Core.Services;
 
-/// <summary>Прикладний сервіс видач: сценарій і розрахунок суми.</summary>
+/// <summary>
+/// Прикладний сервіс видач: сценарій і розрахунок суми.
+/// </summary>
 public sealed class LoanService
 {
     private static readonly Action<ILogger, int, Exception?> StorageFailure =
@@ -15,12 +17,47 @@ public sealed class LoanService
             new EventId(1, nameof(StorageFailure)),
             "Збій сховища, {LoanId}");
 
+    private static readonly Func<ILogger, int, IDisposable?> LoanScope =
+        LoggerMessage.DefineScope<int>("Loan:{LoanId}");
+
+    private static readonly Action<ILogger, int, int, Exception?> PlacementStarted =
+        LoggerMessage.Define<int, int>(
+            LogLevel.Debug,
+            new EventId(2, nameof(PlacementStarted)),
+            "Початок оформлення, читач {ReaderId}, позицій {ItemCount}");
+
+    private static readonly Action<ILogger, int, Exception?> EmptyLoanWarning =
+        LoggerMessage.Define<int>(
+            LogLevel.Warning,
+            new EventId(3, nameof(EmptyLoanWarning)),
+            "Видача {LoanId} не містить жодної позиції");
+
+    private static readonly Action<ILogger, int, Exception?> NotificationWarning =
+        LoggerMessage.Define<int>(
+            LogLevel.Warning,
+            new EventId(4, nameof(NotificationWarning)),
+            "Сповіщення читачу {ReaderId} не надіслано");
+
+    private static readonly Action<ILogger, int, Exception?> LoanPlaced =
+        LoggerMessage.Define<int>(
+            LogLevel.Information,
+            new EventId(5, nameof(LoanPlaced)),
+            "Видачу оформлено, читач {ReaderId}");
+
+    private static readonly Action<ILogger, Exception?> BooksReturned =
+        LoggerMessage.Define(
+            LogLevel.Information,
+            new EventId(6, nameof(BooksReturned)),
+            "Книжки повернено");
+
     private readonly ILoanRepository _repository;
     private readonly IFeePolicy _feePolicy;
     private readonly INotifier _notifier;
     private readonly ILogger<LoanService> _log;
 
-    /// <summary>Initializes a new instance of the <see cref="LoanService"/> class.</summary>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LoanService"/> class.
+    /// </summary>
     /// <param name="repository">Сховище видач.</param>
     /// <param name="feePolicy">Політика розрахунку плати.</param>
     /// <param name="notifier">Сповіщувач.</param>
@@ -41,7 +78,31 @@ public sealed class LoanService
         _log = logger ?? NullLogger<LoanService>.Instance;
     }
 
-    /// <summary>Реєструє видачу й повідомляє читача.</summary>
+    /// <summary>
+    /// Рахує коректні значення днів.
+    /// </summary>
+    /// <param name="rows">Рядки з числами.</param>
+    /// <returns>Кількість додатних чисел.</returns>
+    public static int CountValidDays(string[] rows)
+    {
+        ArgumentNullException.ThrowIfNull(rows);
+
+        int valid = 0;
+
+        foreach (string row in rows)
+        {
+            if (int.TryParse(row, out int days) && days > 0)
+            {
+                valid++;
+            }
+        }
+
+        return valid;
+    }
+
+    /// <summary>
+    /// Реєструє видачу й повідомляє читача.
+    /// </summary>
     /// <param name="loan">Видача.</param>
     /// <param name="reader">Читач, якому належить видача.</param>
     public void Place(Loan loan, Reader reader)
@@ -56,11 +117,32 @@ public sealed class LoanService
                 nameof(reader));
         }
 
+        using IDisposable? scope = LoanScope(_log, loan.Id);
+
+        PlacementStarted(_log, reader.Id, loan.Items.Count, null);
+
+        if (loan.Items.Count == 0)
+        {
+            EmptyLoanWarning(_log, loan.Id, null);
+        }
+
         _repository.Add(loan);
-        _notifier.Notify(reader.Email, "Видачу оформлено.");
+
+        try
+        {
+            _notifier.Notify(reader.Email, "Видачу оформлено.");
+        }
+        catch (IOException ex)
+        {
+            NotificationWarning(_log, reader.Id, ex);
+        }
+
+        LoanPlaced(_log, reader.Id, null);
     }
 
-    /// <summary>Рахує суму видачі за поточною політикою.</summary>
+    /// <summary>
+    /// Рахує суму видачі за поточною політикою.
+    /// </summary>
     /// <param name="loan">Видача.</param>
     /// <returns>Сума плати за всі позиції.</returns>
     public decimal TotalOf(Loan loan)
@@ -77,7 +159,9 @@ public sealed class LoanService
         return total;
     }
 
-    /// <summary>Додає типізовану позицію до заброньованої видачі.</summary>
+    /// <summary>
+    /// Додає типізовану позицію до заброньованої видачі.
+    /// </summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
     /// <param name="item">Позиція видачі.</param>
     public void AddItem(int loanId, LoanItem item)
@@ -99,10 +183,14 @@ public sealed class LoanService
         loan.AddItem(item);
     }
 
-    /// <summary>Повертає видану або прострочену видачу.</summary>
+    /// <summary>
+    /// Повертає видану або прострочену видачу.
+    /// </summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
     public void ReturnLoan(int loanId)
     {
+        using IDisposable? scope = LoanScope(_log, loanId);
+
         Loan loan = _repository.GetById(loanId)
             ?? throw new DomainRuleException(
                 "loan.exists",
@@ -116,9 +204,13 @@ public sealed class LoanService
         }
 
         loan.Return();
+
+        BooksReturned(_log, null);
     }
 
-    /// <summary>Завантажує видачу.</summary>
+    /// <summary>
+    /// Завантажує видачу.
+    /// </summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
     /// <returns>Видача.</returns>
     public Loan Load(int loanId) =>
@@ -127,7 +219,9 @@ public sealed class LoanService
                 "loan.exists",
                 $"Видачу {loanId} не знайдено");
 
-    /// <summary>Скасовує видачу.</summary>
+    /// <summary>
+    /// Скасовує видачу.
+    /// </summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
     public void Cancel(int loanId)
     {
@@ -145,25 +239,5 @@ public sealed class LoanService
             StorageFailure(_log, loanId, ex);
             throw;
         }
-    }
-
-    /// <summary>Рахує коректні значення днів.</summary>
-    /// <param name="rows">Рядки з числами.</param>
-    /// <returns>Кількість додатних чисел.</returns>
-    private static int CountValidDays(string[] rows)
-    {
-        ArgumentNullException.ThrowIfNull(rows);
-
-        int valid = 0;
-
-        foreach (string row in rows)
-        {
-            if (int.TryParse(row, out int days) && days > 0)
-            {
-                valid++;
-            }
-        }
-
-        return valid;
     }
 }

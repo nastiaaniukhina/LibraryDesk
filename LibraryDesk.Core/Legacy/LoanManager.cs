@@ -38,7 +38,6 @@ public class LoanManager
             text += o.Id + ";" + o.Total + ";" + o.Status;
 
         File.WriteAllText("report.csv", text);
-        Console.WriteLine("Звіт збережено");
         return text;
     }
 
