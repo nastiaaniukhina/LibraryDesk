@@ -87,4 +87,24 @@ public sealed class LoanService
 
         loan.AddItem(item);
     }
+
+    /// <summary>Повертає видачу; повертає код результату.</summary>
+    /// <param name="loanId">Ідентифікатор видачі.</param>
+    /// <returns>0 — успіх, -1 — не знайдено, -2 — недопустимий стан.</returns>
+    public int ReturnLoan(int loanId)
+    {
+        Loan? loan = _repository.GetById(loanId);
+        if (loan == null)
+        {
+            return -1;
+        }
+
+        if (loan.Status is not (LoanStatus.Issued or LoanStatus.Overdue))
+        {
+            return -2;
+        }
+
+        loan.Return();
+        return 0;
+    }
 }
