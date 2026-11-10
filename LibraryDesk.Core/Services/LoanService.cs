@@ -9,6 +9,12 @@ namespace LibraryDesk.Core.Services;
 /// <summary>Прикладний сервіс видач: сценарій і розрахунок суми.</summary>
 public sealed class LoanService
 {
+    private static readonly Action<ILogger, int, Exception?> StorageFailure =
+        LoggerMessage.Define<int>(
+            LogLevel.Error,
+            new EventId(1, nameof(StorageFailure)),
+            "Збій сховища, {LoanId}");
+
     private readonly ILoanRepository _repository;
     private readonly IFeePolicy _feePolicy;
     private readonly INotifier _notifier;
@@ -20,10 +26,10 @@ public sealed class LoanService
     /// <param name="notifier">Сповіщувач.</param>
     /// <param name="logger">Логер; якщо не передано, журнал не ведеться.</param>
     public LoanService(
-    ILoanRepository repository,
-    IFeePolicy feePolicy,
-    INotifier notifier,
-    ILogger<LoanService>? logger = null)
+        ILoanRepository repository,
+        IFeePolicy feePolicy,
+        INotifier notifier,
+        ILogger<LoanService>? logger = null)
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(feePolicy);
@@ -98,7 +104,10 @@ public sealed class LoanService
     public void ReturnLoan(int loanId)
     {
         Loan loan = _repository.GetById(loanId)
-            ?? throw new DomainRuleException("loan.exists", $"Видачу {loanId} не знайдено");
+            ?? throw new DomainRuleException(
+                "loan.exists",
+                $"Видачу {loanId} не знайдено");
+
         if (loan.Status is not (LoanStatus.Issued or LoanStatus.Overdue))
         {
             throw new DomainRuleException(
@@ -109,58 +118,49 @@ public sealed class LoanService
         loan.Return();
     }
 
-    /// <summary>Завантажує видачу (антипатерн 1).</summary>
+    /// <summary>Завантажує видачу.</summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
-    /// <returns>Видача або null.</returns>
-    public Loan? Load(int loanId)
-    {
-        try
-        {
-            return _repository.GetById(loanId);
-        }
-        catch (Exception)
-        {
-        }
+    /// <returns>Видача.</returns>
+    public Loan Load(int loanId) =>
+        _repository.GetById(loanId)
+            ?? throw new DomainRuleException(
+                "loan.exists",
+                $"Видачу {loanId} не знайдено");
 
-        return null;
-    }
-
-    /// <summary>Скасовує видачу (антипатерни 2 і 3).</summary>
+    /// <summary>Скасовує видачу.</summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
-#pragma warning disable CA2200
     public void Cancel(int loanId)
     {
         try
         {
-            Loan loan = _repository.GetById(loanId)!;
+            Loan loan = _repository.GetById(loanId)
+                ?? throw new DomainRuleException(
+                    "loan.exists",
+                    $"Видачу {loanId} не знайдено");
+
             loan.Cancel();
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
-            Console.WriteLine("Щось пішло не так");
-            throw ex;
+            StorageFailure(_log, loanId, ex);
+            throw;
         }
     }
 
-    /// <summary>Рахує коректні значення днів (антипатерн 4).</summary>
+    /// <summary>Рахує коректні значення днів.</summary>
     /// <param name="rows">Рядки з числами.</param>
     /// <returns>Кількість додатних чисел.</returns>
-    ///
     private static int CountValidDays(string[] rows)
     {
+        ArgumentNullException.ThrowIfNull(rows);
+
         int valid = 0;
+
         foreach (string row in rows)
         {
-            try
+            if (int.TryParse(row, out int days) && days > 0)
             {
-                int days = int.Parse(row);
-                if (days > 0)
-                {
-                    valid++;
-                }
-            }
-            catch (FormatException)
-            {
+                valid++;
             }
         }
 
