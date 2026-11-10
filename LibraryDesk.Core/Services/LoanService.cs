@@ -1,4 +1,3 @@
-
 using LibraryDesk.Core.Abstractions;
 using LibraryDesk.Core.Domain;
 using LibraryDesk.Core.Errors;
@@ -88,23 +87,19 @@ public sealed class LoanService
         loan.AddItem(item);
     }
 
-    /// <summary>Повертає видачу; повертає код результату.</summary>
+    /// <summary>Повертає видану або прострочену видачу.</summary>
     /// <param name="loanId">Ідентифікатор видачі.</param>
-    /// <returns>0 — успіх, -1 — не знайдено, -2 — недопустимий стан.</returns>
-    public int ReturnLoan(int loanId)
+    public void ReturnLoan(int loanId)
     {
-        Loan? loan = _repository.GetById(loanId);
-        if (loan == null)
-        {
-            return -1;
-        }
-
+        Loan loan = _repository.GetById(loanId)
+            ?? throw new DomainRuleException("loan.exists", $"Видачу {loanId} не знайдено");
         if (loan.Status is not (LoanStatus.Issued or LoanStatus.Overdue))
         {
-            return -2;
+            throw new DomainRuleException(
+                "loan.returnable",
+                $"Стан {loan.Status} не дозволяє повернення");
         }
 
         loan.Return();
-        return 0;
     }
 }

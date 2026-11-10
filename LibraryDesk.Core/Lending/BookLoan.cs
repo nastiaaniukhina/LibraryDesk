@@ -1,4 +1,3 @@
-
 namespace LibraryDesk.Core.Lending;
 
 /// <summary>
