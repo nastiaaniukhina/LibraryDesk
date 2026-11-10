@@ -56,6 +56,7 @@ catch (Exception ex)
 static void RunApplication(string[] cmdArgs, ILoggerFactory factory)
 {
     ILogger appLog = factory.CreateLogger("LibraryDesk.App");
+    using FileAuditLog audit = new("audit.log");
     Action<ILogger, int, Exception?> logError =
     LoggerMessage.Define<int>(
         LogLevel.Error,
@@ -87,7 +88,9 @@ static void RunApplication(string[] cmdArgs, ILoggerFactory factory)
     loan.AddItem(new LoanItem("ISBN-001", 14, 0.50m));
     loan.AddItem(new LoanItem("ISBN-002", 7, 1.20m));
     service.Place(loan, reader);
+    audit.Write("Place", loan.Id);
     loan.Issue(now);
+    audit.Write("Issue", loan.Id);
 
     string total = service.TotalOf(loan).ToString("F2", CultureInfo.InvariantCulture);
     Console.WriteLine($"Видача #{loan.Id}, політика: {readerType}");
@@ -95,6 +98,7 @@ static void RunApplication(string[] cmdArgs, ILoggerFactory factory)
     Console.WriteLine($"Сума: {total}");
 
     loan.Return();
+    audit.Write("Return", loan.Id);
     ArchivedLoan archived = new(loan, now);
     Console.WriteLine($"Архів: видача #{archived.Id}, стан {archived.Status}");
     Console.Write(LoanCsvReport.BuildCsv(repository.GetAll(), service.TotalOf));

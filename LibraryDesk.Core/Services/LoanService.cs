@@ -246,9 +246,11 @@ public sealed class LoanService
     /// <param name="loan">Видача.</param>
     public void ExportReport(string path, Loan loan)
     {
-        StreamWriter writer = new(path);
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        ArgumentNullException.ThrowIfNull(loan);
+
+        using StreamWriter writer = new(path);
         writer.WriteLine($"Видача {loan.Id}");
         writer.WriteLine(TotalOf(loan));
-        writer.Close();
     }
 }
