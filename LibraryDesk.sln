@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.App", "LibraryD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Tests", "LibraryDesk.Tests\LibraryDesk.Tests.csproj", "{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Refactoring", "LibraryDesk.Refactoring\LibraryDesk.Refactoring.csproj", "{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}.Release|x64.Build.0 = Release|Any CPU
 		{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}.Release|x86.Build.0 = Release|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Debug|x64.Build.0 = Debug|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Debug|x86.Build.0 = Debug|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x64.ActiveCfg = Release|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x64.Build.0 = Release|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x86.ActiveCfg = Release|Any CPU
+		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -78,3 +78,18 @@ dotnet_diagnostic.SA1600.severity = none
    [LibraryDesk.Tests/**.cs]
    dotnet_diagnostic.SA1600.severity = none
    dotnet_diagnostic.CA1707.severity = none
+   
+# ЛР № 6: навчальний модуль і його тести
+[LibraryDesk.Refactoring/**.cs]
+# рефакторинг не має змінювати поведінку, тому правила про культуру
+# і static тут лише підказки (див. реєстр боргу)
+dotnet_diagnostic.CA1304.severity = suggestion
+dotnet_diagnostic.CA1305.severity = suggestion
+dotnet_diagnostic.CA1307.severity = suggestion
+dotnet_diagnostic.CA1310.severity = suggestion
+dotnet_diagnostic.CA1311.severity = suggestion
+dotnet_diagnostic.CA1822.severity = suggestion
+
+[LibraryDesk.Refactoring.Tests/**.cs]
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.CA1707.severity = none
