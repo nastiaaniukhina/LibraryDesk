@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Tests", "Librar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Refactoring", "LibraryDesk.Refactoring\LibraryDesk.Refactoring.csproj", "{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Refactoring.Tests", "LibraryDesk.Refactoring.Tests\LibraryDesk.Refactoring.Tests.csproj", "{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x64.Build.0 = Release|Any CPU
 		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x86.ActiveCfg = Release|Any CPU
 		{9E5939D5-FA75-4E99-8EC0-B7462D4B9C7D}.Release|x86.Build.0 = Release|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Debug|x64.Build.0 = Debug|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Debug|x86.Build.0 = Debug|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Release|x64.ActiveCfg = Release|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Release|x64.Build.0 = Release|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Release|x86.ActiveCfg = Release|Any CPU
+		{2BC186B3-EBAE-4AC0-AC6E-717037C6D790}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
