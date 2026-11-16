@@ -1,54 +1,38 @@
-namespace LibraryDesk.Core.Pricing;
+using LibraryDesk.Core.Pricing;
 
-/// <summary>Пеня за прострочення повернення книжки.</summary>
-public sealed class LateFeePolicy
+namespace LibraryDesk.Tests;
+
+public class LateFeePolicyTests
 {
-    /// <summary>Пільгові доби, за які пеню не нараховують.</summary>
-    public const int GraceDays = 3;
-
-    /// <summary>Пеня за добу, грн.</summary>
-    public const decimal DailyFee = 2m;
-
-    /// <summary>Доплата за добу при тривалому простроченні, грн.</summary>
-    public const decimal LongOverdueExtra = 1m;
-
-    /// <summary>Кількість діб, з якої прострочення вважають тривалим.</summary>
-    public const int LongOverdueFrom = 14;
-
-    /// <summary>Множник пені для студента.</summary>
-    public const decimal StudentMultiplier = 0.5m;
-
-    /// <summary>Рахує пеню за прострочення.</summary>
-    /// <param name="daysOverdue">Кількість діб прострочення, не від'ємна.</param>
-    /// <param name="isStudent">Чи є читач студентом.</param>
-    /// <param name="bookPrice">Вартість книжки, грн; верхня межа пені.</param>
-    /// <returns>Сума пені, грн.</returns>
-    public static decimal FeeFor(int daysOverdue, bool isStudent, decimal bookPrice = decimal.MaxValue)
+    [Theory]
+    [InlineData(0, false, 0)]
+    [InlineData(3, false, 0)]
+    [InlineData(4, false, 2)]
+    [InlineData(13, false, 20)]
+    [InlineData(14, false, 33)]
+    [InlineData(14, true, 16.5)]
+    [InlineData(10, true, 7)]
+    public void FeeFor_Boundaries_MatchesTable(
+        int daysOverdue, bool isStudent, double expected)
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(daysOverdue);
+        var policy = new LateFeePolicy();
 
-        if (daysOverdue <= GraceDays)
-        {
-            return 0m;
-        }
+        decimal actual = LateFeePolicy.FeeFor(daysOverdue, isStudent);
 
-        decimal rate = DailyFee;
+        Assert.Equal((decimal)expected, actual);
+    }
 
-        if (daysOverdue >= LongOverdueFrom)
-        {
-            rate += LongOverdueExtra;
-        }
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(-100)]
+    public void FeeFor_NegativeDays_ThrowsOutOfRange(int daysOverdue)
+    {
+        var policy = new LateFeePolicy();
 
-        decimal fee = (daysOverdue - GraceDays) * rate;
+        var ex = Assert.Throws<ArgumentOutOfRangeException>(
+            () => LateFeePolicy.FeeFor(daysOverdue, true));
 
-        if (isStudent)
-        {
-            fee *= StudentMultiplier;
-        }
-
-        fee = Math.Min(fee, bookPrice);
-
-        return decimal.Round(fee, 2);
+        Assert.Equal("daysOverdue", ex.ParamName);
     }
 }
 
