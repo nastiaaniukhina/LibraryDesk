@@ -43,6 +43,12 @@ public sealed class LateFeePolicy
             fee *= StudentMultiplier;
         }
 
-        return decimal.Round(fee, 2);
+        fee = decimal.Round(fee, 2);
+        if (fee > bookPrice)
+        {
+            fee = bookPrice;
+        }
+
+        return fee;
     }
 }
