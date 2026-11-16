@@ -26,29 +26,20 @@ public sealed class LateFeePolicy
     public static decimal FeeFor(int daysOverdue, bool isStudent, decimal bookPrice = decimal.MaxValue)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(daysOverdue);
+
         if (daysOverdue <= GraceDays)
         {
             return 0m;
         }
 
-        decimal rate = DailyFee;
-        if (daysOverdue >= LongOverdueFrom)
-        {
-            rate += LongOverdueExtra;
-        }
+        decimal raw = (daysOverdue - GraceDays) * RateFor(daysOverdue) * MultiplierFor(isStudent);
 
-        decimal fee = (daysOverdue - GraceDays) * rate;
-        if (isStudent)
-        {
-            fee *= StudentMultiplier;
-        }
-
-        fee = decimal.Round(fee, 2);
-        if (fee > bookPrice)
-        {
-            fee = bookPrice;
-        }
-
-        return fee;
+        return Math.Min(decimal.Round(raw, 2), bookPrice);
     }
+
+    private static decimal RateFor(int daysOverdue) =>
+        daysOverdue >= LongOverdueFrom ? DailyFee + LongOverdueExtra : DailyFee;
+
+    private static decimal MultiplierFor(bool isStudent) =>
+        isStudent ? StudentMultiplier : 1m;
 }
