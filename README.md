@@ -1,4 +1,5 @@
 # LibraryDesk
+
 ![CI](https://github.com/nastiaaniukhina/LibraryDesk/actions/workflows/ci.yml/badge.svg)
 
 Навчальний проєкт з дисципліни «Конструювання програмного
