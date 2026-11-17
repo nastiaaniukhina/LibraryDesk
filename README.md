@@ -1,5 +1,7 @@
 # LibraryDesk
 
+![CI](https://github.com/nastiaaniukhina/LibraryDesk/actions/workflows/ci.yml/badge.svg)
+
 Навчальний проєкт з дисципліни «Конструювання програмного
 забезпечення». Варіант № 2: каталог бібліотеки та видача книжок.
 
