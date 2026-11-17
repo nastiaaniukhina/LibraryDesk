@@ -486,3 +486,5 @@ $RECYCLE.BIN/
 # власні винятки проєкту
 *.user
 data/*.local.json
+appsettings.Local.json
+*.secrets.json
