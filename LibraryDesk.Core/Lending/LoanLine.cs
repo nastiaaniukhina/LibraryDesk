@@ -11,13 +11,4 @@ public sealed class LoanLine
 
     /// <summary>Gets ціну одного примірника, грн.</summary>
     public decimal UnitPrice { get; init; }
-
-    /// <summary>Описує кількість позицій.</summary>
-    /// <param name="count">Кількість.</param>
-    /// <returns>Текстовий опис.</returns>
-    public static string Describe(int count)
-    {
-        string note;
-        return "Позицій: " + count;
-    }
 }
