@@ -79,7 +79,7 @@ public sealed class Loan
             throw new InvalidOperationException("Прострочити можна лише видану видачу.");
         }
 
-        if (DueAt is not DateTimeOffset due || now <= due)
+        if (DueAt is not DateTimeOffset due || now < due)
         {
             throw new InvalidOperationException("Строк повернення ще не минув.");
         }

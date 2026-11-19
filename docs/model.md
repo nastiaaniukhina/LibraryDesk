@@ -17,7 +17,7 @@
 | Reserved | Issued | є хоча б одна позиція |
 | Reserved | Cancelled | завжди |
 | Issued | Returned | завжди |
-| Issued | Overdue | поточна дата пізніша за DueAt |
+| Issued | Overdue | поточний момент не раніший за DueAt |
 | Overdue | Returned | завжди |
 
 DueAt = дата видачі + найбільший Days серед позицій; задається в момент переходу Reserved → Issued.
