@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 using LibraryDesk.Core.Lending;
 
-namespace LibraryDesk.Core.Reporting;
+namespace LibraryDesk.Core.Reports;
 
 /// <summary>Формування тексту звіту про видачу.</summary>
 public static class LoanReport

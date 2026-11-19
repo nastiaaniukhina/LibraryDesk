@@ -1,4 +1,4 @@
-namespace LibraryDesk.Core.Reporting;
+namespace LibraryDesk.Core.Reports;
 
 /// <summary>Виводить готовий звіт у заданий потік.</summary>
 public sealed class LoanReportPrinter

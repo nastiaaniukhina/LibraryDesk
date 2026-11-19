@@ -1,5 +1,5 @@
 using LibraryDesk.Core.Lending;
-using LibraryDesk.Core.Reporting;
+using LibraryDesk.Core.Reports;
 using Xunit;
 
 namespace LibraryDesk.Tests;
