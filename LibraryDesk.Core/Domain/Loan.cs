@@ -45,7 +45,8 @@ public sealed class Loan
         ArgumentNullException.ThrowIfNull(item);
         if (Status != LoanStatus.Reserved)
         {
-            throw new InvalidOperationException("Позиції додають лише до заброньованої видачі.");
+            throw new InvalidOperationException(
+                "Повернути можна лише видану або прострочену видачу.");
         }
 
         _items.Add(item);
@@ -91,7 +92,8 @@ public sealed class Loan
     {
         if (Status is not (LoanStatus.Issued or LoanStatus.Overdue))
         {
-            throw new InvalidOperationException("Повернути можна лише видану або прострочену видачу.");
+            throw new InvalidOperationException(
+                "Повернути можна лише видану або прострочену видачу.");
         }
 
         Status = LoanStatus.Returned;

@@ -1,0 +1,4 @@
+P:System.DateTime.Now;Використовуйте TimeProvider (правило X-03)
+P:System.DateTime.UtcNow;Використовуйте TimeProvider (правило X-03)
+P:System.DateTimeOffset.Now;Використовуйте TimeProvider (правило X-03)
+P:System.DateTimeOffset.UtcNow;Використовуйте TimeProvider (правило X-03)

@@ -3,7 +3,6 @@ using LibraryDesk.Core.Notifications;
 using LibraryDesk.Core.Pricing;
 using LibraryDesk.Core.Services;
 using LibraryDesk.Core.Storage;
-using Xunit;
 
 namespace LibraryDesk.Tests;
 

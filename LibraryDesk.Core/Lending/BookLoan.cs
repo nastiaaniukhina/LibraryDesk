@@ -49,11 +49,12 @@ public class BookLoan
     /// <summary>Initializes a new instance of the <see cref="BookLoan"/> class.</summary>
     /// <param name="id">Номер видачі.</param>
     /// <param name="readerName">Прізвище читача.</param>
-    public BookLoan(string id, string readerName)
+    /// <param name="createdAt">Момент створення видачі.</param>
+    public BookLoan(string id, string readerName, DateTimeOffset createdAt)
     {
         Id = id;
         ReaderName = readerName;
-        CreatedAt = DateTime.Now;
+        CreatedAt = createdAt;
     }
 
     /// <summary>Gets the loan number.</summary>
@@ -66,7 +67,7 @@ public class BookLoan
     public int Status { get; private set; }
 
     /// <summary>Gets the loan creation date and time.</summary>
-    public DateTime CreatedAt { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; }
 
     /// <summary>Шукає видачу за номером.</summary>
     /// <param name="loans">Список видач, у якому виконується пошук.</param>
