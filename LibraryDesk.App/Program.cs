@@ -1,4 +1,4 @@
-﻿using LibraryDesk.App;
+using LibraryDesk.App;
 using LibraryDesk.Core.Abstractions;
 using LibraryDesk.Core.Notifications;
 using LibraryDesk.Core.Pricing;
@@ -12,7 +12,11 @@ string logPath = Path.Combine("data", "scenario.log");
 JsonLoanRepository repository = new(dataPath);
 if (args.Length > 0 && args[0] == "seed")
 {
-    foreach (var loan in SampleDataGenerator.Generate()) repository.Add(loan);
+    foreach (var loan in SampleDataGenerator.Generate())
+    {
+        repository.Add(loan);
+    }
+
     repository.Save();
     return 0;
 }

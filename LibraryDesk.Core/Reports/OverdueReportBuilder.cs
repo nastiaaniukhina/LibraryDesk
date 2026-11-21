@@ -1,6 +1,6 @@
 using LibraryDesk.Core.Abstractions;
-using LibraryDesk.Core.Pricing;
 using LibraryDesk.Core.Domain;
+using LibraryDesk.Core.Pricing;
 
 namespace LibraryDesk.Core.Reports;
 

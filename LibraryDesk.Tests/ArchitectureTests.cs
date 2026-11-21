@@ -11,7 +11,7 @@ public sealed class ArchitectureTests
         | BindingFlags.Static
         | BindingFlags.DeclaredOnly;
 
-    private static readonly string[] ForbiddenInDomain =
+    private static readonly string[] _forbiddenInDomain =
     {
         "LibraryDesk.Core.Storage",
         "LibraryDesk.Core.Services",
@@ -38,7 +38,7 @@ public sealed class ArchitectureTests
 
         IEnumerable<string?> offenders = used
             .Where(t => t.Namespace is not null
-                && ForbiddenInDomain.Any(n => t.Namespace.StartsWith(n, StringComparison.Ordinal)))
+                && _forbiddenInDomain.Any(n => t.Namespace.StartsWith(n, StringComparison.Ordinal)))
             .Select(t => t.FullName);
 
         Assert.Empty(offenders);

@@ -31,7 +31,11 @@ public sealed class ConsoleMenu
         {
             ShowMenu();
             string? choice = _input.ReadLine();
-            if (choice == "0") return 0;
+            if (choice == "0")
+            {
+                return 0;
+            }
+
             Execute(choice);
         }
     }
@@ -63,25 +67,40 @@ public sealed class ConsoleMenu
 
     private void RunLoanAction(string scenario, Action<int> action)
     {
-        if (!ReadId(out int id)) return;
+        if (!ReadId(out int id))
+        {
+            return;
+        }
+
         _runner.Run(scenario, () => action(id));
     }
 
     private void ReturnLoan()
     {
-        if (!ReadId(out int id)) return;
+        if (!ReadId(out int id))
+        {
+            return;
+        }
+
         _runner.Run("UC-03", () =>
         {
             ReturnReceipt receipt = _lifecycle.ReturnLoan(id);
             _output.WriteLine($"РЎСѓРјР°: {receipt.Total.ToString("F2", CultureInfo.InvariantCulture)}");
-            if (receipt.OverdueDays > 0) _output.WriteLine($"РџРµРЅСЏ: {receipt.Penalty.ToString("F2", CultureInfo.InvariantCulture)}");
+            if (receipt.OverdueDays > 0)
+            {
+                _output.WriteLine($"РџРµРЅСЏ: {receipt.Penalty.ToString("F2", CultureInfo.InvariantCulture)}");
+            }
         });
     }
 
     private bool ReadId(out int id)
     {
         _output.Write("РќРѕРјРµСЂ РІРёРґР°С‡С–: ");
-        if (InputParsers.TryLoanId(_input.ReadLine(), out id)) return true;
+        if (InputParsers.TryLoanId(_input.ReadLine(), out id))
+        {
+            return true;
+        }
+
         _output.WriteLine("РќРµРєРѕСЂРµРєС‚РЅРёР№ РЅРѕРјРµСЂ.");
         return false;
     }
@@ -90,7 +109,10 @@ public sealed class ConsoleMenu
     {
         _output.Write("ID С‡РёС‚Р°С‡Р°: ");
         if (!int.TryParse(_input.ReadLine(), out int id) || id <= 0) { _output.WriteLine("РќРµРєРѕСЂРµРєС‚РЅРёР№ ID."); return; }
-        foreach (Loan loan in _queries.FindByReader(id)) _output.WriteLine($"#{loan.Id}: {loan.Status}");
+        foreach (Loan loan in _queries.FindByReader(id))
+        {
+            _output.WriteLine($"#{loan.Id}: {loan.Status}");
+        }
     }
 
     private void FindIsbn()
@@ -98,7 +120,10 @@ public sealed class ConsoleMenu
         _output.Write("ISBN: ");
         string? isbn = _input.ReadLine();
         if (string.IsNullOrWhiteSpace(isbn)) { _output.WriteLine("ISBN РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј."); return; }
-        foreach (Loan loan in _queries.FindByIsbn(isbn)) _output.WriteLine($"#{loan.Id}: {loan.Status}");
+        foreach (Loan loan in _queries.FindByIsbn(isbn))
+        {
+            _output.WriteLine($"#{loan.Id}: {loan.Status}");
+        }
     }
 
     private void DebtorReport()

@@ -1,8 +1,8 @@
 using LibraryDesk.Core.Domain;
+using LibraryDesk.Core.Notifications;
 using LibraryDesk.Core.Pricing;
 using LibraryDesk.Core.Services;
 using LibraryDesk.Core.Storage;
-using LibraryDesk.Core.Notifications;
 
 namespace LibraryDesk.Tests;
 

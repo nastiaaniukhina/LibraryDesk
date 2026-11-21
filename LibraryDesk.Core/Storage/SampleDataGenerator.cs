@@ -19,8 +19,16 @@ public static class SampleDataGenerator
             ReaderKind kind = (ReaderKind)(i % 3);
             Loan loan = new(i, (i % 30) + 1, start.AddDays(i), kind);
             loan.AddItem(new LoanItem($"ISBN-{i:000000}", random.Next(3, 15), 0.50m + (random.Next(0, 6) / 10m)));
-            if (i % 4 != 0) loan.Issue(start.AddDays(i));
-            if (i % 4 == 1) loan.MarkOverdue(start.AddDays(i + 20));
+            if (i % 4 != 0)
+            {
+                loan.Issue(start.AddDays(i));
+            }
+
+            if (i % 4 == 1)
+            {
+                loan.MarkOverdue(start.AddDays(i + 20));
+            }
+
             loans.Add(loan);
         }
 

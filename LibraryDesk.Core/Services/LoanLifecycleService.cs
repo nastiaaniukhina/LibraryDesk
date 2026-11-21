@@ -1,6 +1,6 @@
 using LibraryDesk.Core.Abstractions;
-using LibraryDesk.Core.Pricing;
 using LibraryDesk.Core.Domain;
+using LibraryDesk.Core.Pricing;
 
 namespace LibraryDesk.Core.Services;
 
@@ -26,8 +26,16 @@ public sealed class LoanLifecycleService
     {
         ArgumentNullException.ThrowIfNull(loan);
         ArgumentNullException.ThrowIfNull(reader);
-        if (loan.ReaderId != reader.Id) throw new ArgumentException("Р вЂ™Р С‘Р Т‘Р В°РЎвЂЎР В° Р Р…Р В°Р В»Р ВµР В¶Р С‘РЎвЂљРЎРЉ РЎвЂ“Р Р…РЎв‚¬Р С•Р СРЎС“ РЎвЂЎР С‘РЎвЂљР В°РЎвЂЎР ВµР Р†РЎвЂ“.", nameof(reader));
-        if (loan.Items.Count == 0) throw new DomainRuleException("Р вЂРЎР‚Р С•Р Р…РЎР‹Р Р†Р В°Р Р…Р Р…РЎРЏ Р СР В°РЎвЂќ Р СРЎвЂ“РЎРѓРЎвЂљР С‘РЎвЂљР С‘ РЎвЂ¦Р С•РЎвЂЎР В° Р В± Р С•Р Т‘Р Р…РЎС“ Р С”Р Р…Р С‘Р В¶Р С”РЎС“.");
+        if (loan.ReaderId != reader.Id)
+        {
+            throw new ArgumentException("Р вЂ™Р С‘Р Т‘Р В°РЎвЂЎР В° Р Р…Р В°Р В»Р ВµР В¶Р С‘РЎвЂљРЎРЉ РЎвЂ“Р Р…РЎв‚¬Р С•Р СРЎС“ РЎвЂЎР С‘РЎвЂљР В°РЎвЂЎР ВµР Р†РЎвЂ“.", nameof(reader));
+        }
+
+        if (loan.Items.Count == 0)
+        {
+            throw new DomainRuleException("Р вЂРЎР‚Р С•Р Р…РЎР‹Р Р†Р В°Р Р…Р Р…РЎРЏ Р СР В°РЎвЂќ Р СРЎвЂ“РЎРѓРЎвЂљР С‘РЎвЂљР С‘ РЎвЂ¦Р С•РЎвЂЎР В° Р В± Р С•Р Т‘Р Р…РЎС“ Р С”Р Р…Р С‘Р В¶Р С”РЎС“.");
+        }
+
         _repository.Add(loan);
         _repository.Save();
         _notifier.Notify(reader.Email, $"Р РЋРЎвЂљР Р†Р С•РЎР‚Р ВµР Р…Р С• Р В±РЎР‚Р С•Р Р…РЎР‹Р Р†Р В°Р Р…Р Р…РЎРЏ #{loan.Id}.");
