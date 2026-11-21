@@ -95,3 +95,5 @@ dotnet_diagnostic.CA1707.severity = none
 # CA1031: верхній обробник у Program.cs
 [LibraryDesk.App/Program.cs]
 dotnet_diagnostic.CA1031.severity = none
+
+dotnet_diagnostic.CA1502.severity = warning
