@@ -486,3 +486,7 @@ $RECYCLE.BIN/
 # власні винятки проєкту
 *.user
 data/*.local.json
+TestResults/
+coveragereport/
+*.log
+data/*.tmp
