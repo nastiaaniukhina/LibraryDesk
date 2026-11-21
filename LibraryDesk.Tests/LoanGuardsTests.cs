@@ -1,4 +1,4 @@
-using LibraryDesk.Core.Lending;
+using LibraryDesk.Labs.Lending;
 
 namespace LibraryDesk.Tests;
 
@@ -31,6 +31,6 @@ public class LoanGuardsTests
     public void EnsureHeaderValid_EmailWithoutAt_ThrowsArgument()
     {
         Assert.Throws<ArgumentException>(
-            () => LoanGuards.EnsureHeaderValid(1, "Іваненко", "ivanenko.ex.com"));
+            () => LoanGuards.EnsureHeaderValid(1, "Р†РІР°РЅРµРЅРєРѕ", "ivanenko.ex.com"));
     }
 }

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.App", "LibraryD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Tests", "LibraryDesk.Tests\LibraryDesk.Tests.csproj", "{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "labs", "labs", "{908A2AE8-7277-8D33-5900-B70622523C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryDesk.Labs", "labs\LibraryDesk.Labs\LibraryDesk.Labs.csproj", "{2CF082F1-87A5-4026-92D9-60AE61DC2526}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,8 +59,23 @@ Global
 		{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}.Release|x64.Build.0 = Release|Any CPU
 		{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{1EA34846-642C-4E9B-9BA7-FC9BD1F665B3}.Release|x86.Build.0 = Release|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Debug|x64.Build.0 = Debug|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Debug|x86.Build.0 = Debug|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Release|x64.ActiveCfg = Release|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Release|x64.Build.0 = Release|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Release|x86.ActiveCfg = Release|Any CPU
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CF082F1-87A5-4026-92D9-60AE61DC2526} = {908A2AE8-7277-8D33-5900-B70622523C2F}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-using LibraryDesk.Core.Lending;
+using LibraryDesk.Labs.Lending;
 
 namespace LibraryDesk.Tests;
 
@@ -9,7 +9,7 @@ public class LoanTotalCalculatorTests
     {
         LoanTotalRequest request = new(
             LoanId: 1,
-            Reader: new ReaderInfo("Іваненко", "i@ex.com", true),
+            Reader: new ReaderInfo("Р†РІР°РЅРµРЅРєРѕ", "i@ex.com", true),
             Lines: new List<LoanLine>
             {
                 new() { Isbn = "ISBN-001", Quantity = 12, UnitPrice = 100m },
@@ -31,7 +31,7 @@ public class LoanTotalCalculatorTests
     {
         LoanTotalRequest request = new(
             LoanId: 2,
-            Reader: new ReaderInfo("Петренко", "p@ex.com", false),
+            Reader: new ReaderInfo("РџРµС‚СЂРµРЅРєРѕ", "p@ex.com", false),
             Lines: new List<LoanLine>
             {
                 new() { Isbn = "ISBN-001", Quantity = 2, UnitPrice = 200m },
@@ -52,7 +52,7 @@ public class LoanTotalCalculatorTests
     {
         LoanTotalRequest request = new(
             LoanId: 3,
-            Reader: new ReaderInfo("Коваль", "k@ex.com", false),
+            Reader: new ReaderInfo("РљРѕРІР°Р»СЊ", "k@ex.com", false),
             Lines: new List<LoanLine>
             {
                 new() { Isbn = "ISBN-001", Quantity = 2, UnitPrice = 200m },

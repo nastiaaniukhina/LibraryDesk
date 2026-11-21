@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibraryDesk.Core\LibraryDesk.Core.csproj" />
+    <ProjectReference Include="..\labs\LibraryDesk.Labs\LibraryDesk.Labs.csproj" />
   </ItemGroup>
 
 </Project>

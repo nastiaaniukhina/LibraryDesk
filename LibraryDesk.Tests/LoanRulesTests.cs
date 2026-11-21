@@ -1,4 +1,4 @@
-using LibraryDesk.Core.Lending;
+using LibraryDesk.Labs.Lending;
 
 namespace LibraryDesk.Tests;
 

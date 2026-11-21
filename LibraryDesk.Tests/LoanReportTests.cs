@@ -1,5 +1,6 @@
-using LibraryDesk.Core.Lending;
 using LibraryDesk.Core.Reports;
+using LibraryDesk.Labs;
+using LibraryDesk.Labs.Lending;
 
 namespace LibraryDesk.Tests;
 
@@ -12,7 +13,6 @@ public class LoanReportTests
         LoanTotalResult result = LoanTotalCalculator.Calculate(request);
 
         string text = LoanReport.TextOf(request, result);
-
         Assert.Contains("Разом: 1292.70", text);
     }
 
@@ -31,7 +31,7 @@ public class LoanReportTests
         StringWriter writer = new();
         LoanReportPrinter printer = new(writer);
 
-        printer.Print("Разом: 10.00");
+        printer.Print("Р Р°Р·РѕРј: 10.00");
 
         Assert.Contains("10.00", writer.ToString());
     }
