@@ -1,47 +1,27 @@
-using System.Globalization;
+using LibraryDesk.App;
 using LibraryDesk.Core.Abstractions;
-using LibraryDesk.Core.Domain;
 using LibraryDesk.Core.Notifications;
 using LibraryDesk.Core.Pricing;
-using LibraryDesk.Core.Reports;
 using LibraryDesk.Core.Services;
 using LibraryDesk.Core.Storage;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-// Композиційний корінь: єдине місце, де створюються конкретні реалізації.
-string readerType = args.Length > 0 ? args[0] : "student";
-
-Dictionary<string, IFeePolicy> policies = new()
+TimeProvider clock = TimeProvider.System;
+string dataPath = Path.Combine("data", "library.json");
+string logPath = Path.Combine("data", "scenario.log");
+JsonLoanRepository repository = new(dataPath);
+if (args.Length > 0 && args[0] == "seed")
 {
-    ["regular"] = new DiscountFeePolicy(0.05m),
-    ["student"] = new StudentFeePolicy(),
-    ["staff"] = new DiscountFeePolicy(0.30m),
-};
+    foreach (var loan in SampleDataGenerator.Generate()) repository.Add(loan);
+    repository.Save();
+    return;
+}
 
-IFeePolicy policy = policies.TryGetValue(readerType, out IFeePolicy? found)
-    ? found
-    : new StandardFeePolicy();
-
-InMemoryLoanRepository repository = new();
+IPricingCatalog pricing = PricingCatalog.Default();
 TextWriterNotifier notifier = new(Console.Out);
-LoanService service = new(repository, policy, notifier);
-
-// Сценарій
-DateTimeOffset now = DateTimeOffset.Now;
-Reader reader = new(10, "Іваненко Іван", "ivan@example.com") { IsStudent = true };
-Loan loan = new(1, reader.Id, now);
-loan.AddItem(new LoanItem("ISBN-001", 14, 0.50m));
-loan.AddItem(new LoanItem("ISBN-002", 7, 1.20m));
-service.Place(loan, reader);
-loan.Issue(now);
-
-string total = service.TotalOf(loan).ToString("F2", CultureInfo.InvariantCulture);
-Console.WriteLine($"Видача #{loan.Id}, політика: {readerType}");
-Console.WriteLine($"Стан: {loan.Status}");
-Console.WriteLine($"Сума: {total}");
-
-loan.Return(now);
-ArchivedLoan archived = new(loan, now);
-Console.WriteLine($"Архів: видача #{archived.Id}, стан {archived.Status}");
-Console.Write(LoanCsvReport.BuildCsv(repository.GetAll(), service.TotalOf));
+IScenarioLog log = new FileScenarioLog(logPath, clock);
+LoanLifecycleService lifecycle = new(repository, pricing, notifier, clock);
+LoanQueryService queries = new(repository, clock, pricing);
+ScenarioRunner runner = new(log, Console.Out);
+ConsoleMenu menu = new(lifecycle, queries, runner, Console.In, Console.Out);
+return menu.Run();
