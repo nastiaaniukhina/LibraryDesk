@@ -46,7 +46,7 @@ public sealed class Loan
         if (Status != LoanStatus.Reserved)
         {
             throw new InvalidOperationException(
-                "Повернути можна лише видану або прострочену видачу.");
+                "Додавати книжки можна лише до заброньованої видачі.");
         }
 
         _items.Add(item);
