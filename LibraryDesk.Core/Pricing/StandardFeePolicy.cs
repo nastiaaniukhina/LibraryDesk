@@ -3,7 +3,7 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Pricing;
 
-/// <summary>Стандартна плата без знижок.</summary>
+/// <summary>РЎС‚Р°РЅРґР°СЂС‚РЅР° РїР»Р°С‚Р° Р±РµР· Р·РЅРёР¶РѕРє.</summary>
 public sealed class StandardFeePolicy : IFeePolicy
 {
     /// <inheritdoc/>

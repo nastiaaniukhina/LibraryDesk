@@ -5,7 +5,7 @@ using LibraryDesk.Core.Services;
 
 namespace LibraryDesk.App;
 
-/// <summary>Консольне меню сценаріїв бібліотеки.</summary>
+/// <summary>РљРѕРЅСЃРѕР»СЊРЅРµ РјРµРЅСЋ СЃС†РµРЅР°СЂС–С—РІ Р±С–Р±Р»С–РѕС‚РµРєРё.</summary>
 public sealed class ConsoleMenu
 {
     private readonly LoanLifecycleService _lifecycle;
@@ -14,7 +14,7 @@ public sealed class ConsoleMenu
     private readonly TextReader _input;
     private readonly TextWriter _output;
 
-    /// <summary>Створює меню з потоками введення та виведення.</summary>
+    /// <summary>РЎС‚РІРѕСЂСЋС” РјРµРЅСЋ Р· РїРѕС‚РѕРєР°РјРё РІРІРµРґРµРЅРЅСЏ С‚Р° РІРёРІРµРґРµРЅРЅСЏ.</summary>
     public ConsoleMenu(LoanLifecycleService lifecycle, LoanQueryService queries, ScenarioRunner runner, TextReader input, TextWriter output)
     {
         _lifecycle = lifecycle;
@@ -24,7 +24,7 @@ public sealed class ConsoleMenu
         _output = output;
     }
 
-    /// <summary>Запускає головний цикл меню.</summary>
+    /// <summary>Р—Р°РїСѓСЃРєР°С” РіРѕР»РѕРІРЅРёР№ С†РёРєР» РјРµРЅСЋ.</summary>
     public int Run()
     {
         while (true)
@@ -38,13 +38,13 @@ public sealed class ConsoleMenu
 
     private void ShowMenu()
     {
-        _output.WriteLine("1. Видати книжки");
-        _output.WriteLine("2. Прийняти повернення");
-        _output.WriteLine("3. Скасувати бронь");
-        _output.WriteLine("4. Знайти за читачем");
-        _output.WriteLine("5. Знайти за ISBN");
-        _output.WriteLine("6. Звіт боржників");
-        _output.WriteLine("0. Вихід");
+        _output.WriteLine("1. Р’РёРґР°С‚Рё РєРЅРёР¶РєРё");
+        _output.WriteLine("2. РџСЂРёР№РЅСЏС‚Рё РїРѕРІРµСЂРЅРµРЅРЅСЏ");
+        _output.WriteLine("3. РЎРєР°СЃСѓРІР°С‚Рё Р±СЂРѕРЅСЊ");
+        _output.WriteLine("4. Р—РЅР°Р№С‚Рё Р·Р° С‡РёС‚Р°С‡РµРј");
+        _output.WriteLine("5. Р—РЅР°Р№С‚Рё Р·Р° ISBN");
+        _output.WriteLine("6. Р—РІС–С‚ Р±РѕСЂР¶РЅРёРєС–РІ");
+        _output.WriteLine("0. Р’РёС…С–Рґ");
     }
 
     private void Execute(string? choice)
@@ -57,7 +57,7 @@ public sealed class ConsoleMenu
             case "4": FindReader(); break;
             case "5": FindIsbn(); break;
             case "6": DebtorReport(); break;
-            default: _output.WriteLine("Невідомий пункт меню."); break;
+            default: _output.WriteLine("РќРµРІС–РґРѕРјРёР№ РїСѓРЅРєС‚ РјРµРЅСЋ."); break;
         }
     }
 
@@ -73,23 +73,23 @@ public sealed class ConsoleMenu
         _runner.Run("UC-03", () =>
         {
             ReturnReceipt receipt = _lifecycle.ReturnLoan(id);
-            _output.WriteLine($"Сума: {receipt.Total.ToString("F2", CultureInfo.InvariantCulture)}");
-            if (receipt.OverdueDays > 0) _output.WriteLine($"Пеня: {receipt.Penalty.ToString("F2", CultureInfo.InvariantCulture)}");
+            _output.WriteLine($"РЎСѓРјР°: {receipt.Total.ToString("F2", CultureInfo.InvariantCulture)}");
+            if (receipt.OverdueDays > 0) _output.WriteLine($"РџРµРЅСЏ: {receipt.Penalty.ToString("F2", CultureInfo.InvariantCulture)}");
         });
     }
 
     private bool ReadId(out int id)
     {
-        _output.Write("Номер видачі: ");
+        _output.Write("РќРѕРјРµСЂ РІРёРґР°С‡С–: ");
         if (InputParsers.TryLoanId(_input.ReadLine(), out id)) return true;
-        _output.WriteLine("Некоректний номер.");
+        _output.WriteLine("РќРµРєРѕСЂРµРєС‚РЅРёР№ РЅРѕРјРµСЂ.");
         return false;
     }
 
     private void FindReader()
     {
-        _output.Write("ID читача: ");
-        if (!int.TryParse(_input.ReadLine(), out int id) || id <= 0) { _output.WriteLine("Некоректний ID."); return; }
+        _output.Write("ID С‡РёС‚Р°С‡Р°: ");
+        if (!int.TryParse(_input.ReadLine(), out int id) || id <= 0) { _output.WriteLine("РќРµРєРѕСЂРµРєС‚РЅРёР№ ID."); return; }
         foreach (Loan loan in _queries.FindByReader(id)) _output.WriteLine($"#{loan.Id}: {loan.Status}");
     }
 
@@ -97,14 +97,14 @@ public sealed class ConsoleMenu
     {
         _output.Write("ISBN: ");
         string? isbn = _input.ReadLine();
-        if (string.IsNullOrWhiteSpace(isbn)) { _output.WriteLine("ISBN не може бути порожнім."); return; }
+        if (string.IsNullOrWhiteSpace(isbn)) { _output.WriteLine("ISBN РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј."); return; }
         foreach (Loan loan in _queries.FindByIsbn(isbn)) _output.WriteLine($"#{loan.Id}: {loan.Status}");
     }
 
     private void DebtorReport()
     {
-        _output.Write("Дата yyyy-MM-dd: ");
-        if (!InputParsers.TryDate(_input.ReadLine(), out DateOnly date)) { _output.WriteLine("Некоректна дата."); return; }
+        _output.Write("Р”Р°С‚Р° yyyy-MM-dd: ");
+        if (!InputParsers.TryDate(_input.ReadLine(), out DateOnly date)) { _output.WriteLine("РќРµРєРѕСЂРµРєС‚РЅР° РґР°С‚Р°."); return; }
         IReadOnlyList<DebtorLine> lines = _queries.OverdueReport(date);
         _output.WriteLine(OverdueReportFormatter.Format(lines));
     }

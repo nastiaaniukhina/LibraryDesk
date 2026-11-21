@@ -1,5 +1,5 @@
 #pragma warning disable
-// ЛЕГАСІ-КОД ДЛЯ АУДИТУ SOLID (ЛР 4). Не використовується в застосунку.
+// Р›Р•Р“РђРЎР†-РљРћР” Р”Р›РЇ РђРЈР”РРўРЈ SOLID (Р›Р  4). РќРµ РІРёРєРѕСЂРёСЃС‚РѕРІСѓС”С‚СЊСЃСЏ РІ Р·Р°СЃС‚РѕСЃСѓРЅРєСѓ.
 namespace LibraryDesk.Legacy;
 
 public class LoanManager
@@ -38,7 +38,7 @@ public class LoanManager
             text += o.Id + ";" + o.Total + ";" + o.Status;
 
         File.WriteAllText("report.csv", text);
-        Console.WriteLine("Звіт збережено");
+        Console.WriteLine("Р—РІС–С‚ Р·Р±РµСЂРµР¶РµРЅРѕ");
         return text;
     }
 

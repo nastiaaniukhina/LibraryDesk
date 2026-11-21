@@ -1,12 +1,12 @@
 namespace LibraryDesk.Core.Domain;
 
-/// <summary>Незмінний читач бібліотеки.</summary>
+/// <summary>РќРµР·РјС–РЅРЅРёР№ С‡РёС‚Р°С‡ Р±С–Р±Р»С–РѕС‚РµРєРё.</summary>
 public sealed record Reader
 {
     /// <summary>Initializes a new instance of the <see cref="Reader"/> class.</summary>
-    /// <param name="id">Ідентифікатор читача, більший за нуль.</param>
-    /// <param name="name">Прізвище та ім'я, не порожнє.</param>
-    /// <param name="email">Адреса пошти, що містить символ @.</param>
+    /// <param name="id">Р†РґРµРЅС‚РёС„С–РєР°С‚РѕСЂ С‡РёС‚Р°С‡Р°, Р±С–Р»СЊС€РёР№ Р·Р° РЅСѓР»СЊ.</param>
+    /// <param name="name">РџСЂС–Р·РІРёС‰Рµ С‚Р° С–Рј'СЏ, РЅРµ РїРѕСЂРѕР¶РЅС”.</param>
+    /// <param name="email">РђРґСЂРµСЃР° РїРѕС€С‚Рё, С‰Рѕ РјС–СЃС‚РёС‚СЊ СЃРёРјРІРѕР» @.</param>
     public Reader(int id, string name, string email)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
@@ -14,7 +14,7 @@ public sealed record Reader
         ArgumentException.ThrowIfNullOrWhiteSpace(email);
         if (!email.Contains('@'))
         {
-            throw new ArgumentException("Пошта має містити символ @.", nameof(email));
+            throw new ArgumentException("РџРѕС€С‚Р° РјР°С” РјС–СЃС‚РёС‚Рё СЃРёРјРІРѕР» @.", nameof(email));
         }
 
         Id = id;
@@ -22,15 +22,15 @@ public sealed record Reader
         Email = email;
     }
 
-    /// <summary>Gets ідентифікатор читача.</summary>
+    /// <summary>Gets С–РґРµРЅС‚РёС„С–РєР°С‚РѕСЂ С‡РёС‚Р°С‡Р°.</summary>
     public int Id { get; }
 
-    /// <summary>Gets прізвище та ім'я читача.</summary>
+    /// <summary>Gets РїСЂС–Р·РІРёС‰Рµ С‚Р° С–Рј'СЏ С‡РёС‚Р°С‡Р°.</summary>
     public string Name { get; }
 
-    /// <summary>Gets адресу пошти читача.</summary>
+    /// <summary>Gets Р°РґСЂРµСЃСѓ РїРѕС€С‚Рё С‡РёС‚Р°С‡Р°.</summary>
     public string Email { get; }
 
-    /// <summary>Gets a value indicating whether читач є студентом.</summary>
+    /// <summary>Gets a value indicating whether С‡РёС‚Р°С‡ С” СЃС‚СѓРґРµРЅС‚РѕРј.</summary>
     public bool IsStudent { get; init; }
 }

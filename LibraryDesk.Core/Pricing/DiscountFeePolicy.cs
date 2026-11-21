@@ -3,7 +3,7 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Pricing;
 
-/// <summary>Плата зі знижкою за заданою ставкою.</summary>
+/// <summary>РџР»Р°С‚Р° Р·С– Р·РЅРёР¶РєРѕСЋ Р·Р° Р·Р°РґР°РЅРѕСЋ СЃС‚Р°РІРєРѕСЋ.</summary>
 public sealed class DiscountFeePolicy : IFeePolicy
 {
     private const decimal MaxRate = 0.5m;
@@ -11,7 +11,7 @@ public sealed class DiscountFeePolicy : IFeePolicy
     private readonly decimal _rate;
 
     /// <summary>Initializes a new instance of the <see cref="DiscountFeePolicy"/> class.</summary>
-    /// <param name="rate">Ставка знижки від 0 до 0,5.</param>
+    /// <param name="rate">РЎС‚Р°РІРєР° Р·РЅРёР¶РєРё РІС–Рґ 0 РґРѕ 0,5.</param>
     public DiscountFeePolicy(decimal rate)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(rate);

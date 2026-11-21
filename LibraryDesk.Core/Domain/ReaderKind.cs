@@ -1,12 +1,12 @@
 namespace LibraryDesk.Core.Domain;
 
-/// <summary>Категорія читача бібліотеки.</summary>
+/// <summary>РљР°С‚РµРіРѕСЂС–СЏ С‡РёС‚Р°С‡Р° Р±С–Р±Р»С–РѕС‚РµРєРё.</summary>
 public enum ReaderKind
 {
-    /// <summary>Звичайний читач.</summary>
+    /// <summary>Р—РІРёС‡Р°Р№РЅРёР№ С‡РёС‚Р°С‡.</summary>
     Regular,
-    /// <summary>Студент.</summary>
+    /// <summary>РЎС‚СѓРґРµРЅС‚.</summary>
     Student,
-    /// <summary>Працівник бібліотеки.</summary>
+    /// <summary>РџСЂР°С†С–РІРЅРёРє Р±С–Р±Р»С–РѕС‚РµРєРё.</summary>
     Staff,
 }

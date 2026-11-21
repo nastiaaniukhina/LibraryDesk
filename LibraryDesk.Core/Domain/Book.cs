@@ -1,14 +1,14 @@
 namespace LibraryDesk.Core.Domain;
 
-/// <summary>Книжка в каталозі: змінюється лише кількість вільних примірників.</summary>
+/// <summary>РљРЅРёР¶РєР° РІ РєР°С‚Р°Р»РѕР·С–: Р·РјС–РЅСЋС”С‚СЊСЃСЏ Р»РёС€Рµ РєС–Р»СЊРєС–СЃС‚СЊ РІС–Р»СЊРЅРёС… РїСЂРёРјС–СЂРЅРёРєС–РІ.</summary>
 public sealed class Book
 {
     /// <summary>Initializes a new instance of the <see cref="Book"/> class.</summary>
-    /// <param name="isbn">ISBN-код, не порожній.</param>
-    /// <param name="title">Назва, не порожня.</param>
-    /// <param name="author">Автор, не порожній.</param>
-    /// <param name="dailyRate">Денний тариф, не менший за нуль.</param>
-    /// <param name="copiesAvailable">Кількість вільних примірників, не менша за нуль.</param>
+    /// <param name="isbn">ISBN-РєРѕРґ, РЅРµ РїРѕСЂРѕР¶РЅС–Р№.</param>
+    /// <param name="title">РќР°Р·РІР°, РЅРµ РїРѕСЂРѕР¶РЅСЏ.</param>
+    /// <param name="author">РђРІС‚РѕСЂ, РЅРµ РїРѕСЂРѕР¶РЅС–Р№.</param>
+    /// <param name="dailyRate">Р”РµРЅРЅРёР№ С‚Р°СЂРёС„, РЅРµ РјРµРЅС€РёР№ Р·Р° РЅСѓР»СЊ.</param>
+    /// <param name="copiesAvailable">РљС–Р»СЊРєС–СЃС‚СЊ РІС–Р»СЊРЅРёС… РїСЂРёРјС–СЂРЅРёРєС–РІ, РЅРµ РјРµРЅС€Р° Р·Р° РЅСѓР»СЊ.</param>
     public Book(string isbn, string title, string author, decimal dailyRate, int copiesAvailable)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(isbn);
@@ -24,33 +24,33 @@ public sealed class Book
         CopiesAvailable = copiesAvailable;
     }
 
-    /// <summary>Gets ISBN-код книжки.</summary>
+    /// <summary>Gets ISBN-РєРѕРґ РєРЅРёР¶РєРё.</summary>
     public string Isbn { get; }
 
-    /// <summary>Gets назву книжки.</summary>
+    /// <summary>Gets РЅР°Р·РІСѓ РєРЅРёР¶РєРё.</summary>
     public string Title { get; }
 
-    /// <summary>Gets автора книжки.</summary>
+    /// <summary>Gets Р°РІС‚РѕСЂР° РєРЅРёР¶РєРё.</summary>
     public string Author { get; }
 
-    /// <summary>Gets денний тариф.</summary>
+    /// <summary>Gets РґРµРЅРЅРёР№ С‚Р°СЂРёС„.</summary>
     public decimal DailyRate { get; }
 
-    /// <summary>Gets кількість вільних примірників.</summary>
+    /// <summary>Gets РєС–Р»СЊРєС–СЃС‚СЊ РІС–Р»СЊРЅРёС… РїСЂРёРјС–СЂРЅРёРєС–РІ.</summary>
     public int CopiesAvailable { get; private set; }
 
-    /// <summary>Забирає один примірник зі сховища.</summary>
+    /// <summary>Р—Р°Р±РёСЂР°С” РѕРґРёРЅ РїСЂРёРјС–СЂРЅРёРє Р·С– СЃС…РѕРІРёС‰Р°.</summary>
     public void TakeCopy()
     {
         if (CopiesAvailable == 0)
         {
-            throw new InvalidOperationException("Вільних примірників немає.");
+            throw new InvalidOperationException("Р’С–Р»СЊРЅРёС… РїСЂРёРјС–СЂРЅРёРєС–РІ РЅРµРјР°С”.");
         }
 
         CopiesAvailable--;
     }
 
-    /// <summary>Повертає один примірник до сховища.</summary>
+    /// <summary>РџРѕРІРµСЂС‚Р°С” РѕРґРёРЅ РїСЂРёРјС–СЂРЅРёРє РґРѕ СЃС…РѕРІРёС‰Р°.</summary>
     public void ReturnCopy()
     {
         CopiesAvailable++;

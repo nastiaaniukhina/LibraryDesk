@@ -1,6 +1,6 @@
 namespace LibraryDesk.Core.Reports;
 
-/// <summary>Виводить готовий звіт у заданий потік.</summary>
+/// <summary>Р’РёРІРѕРґРёС‚СЊ РіРѕС‚РѕРІРёР№ Р·РІС–С‚ Сѓ Р·Р°РґР°РЅРёР№ РїРѕС‚С–Рє.</summary>
 public sealed class LoanReportPrinter
 {
     private readonly TextWriter _output;
@@ -8,15 +8,15 @@ public sealed class LoanReportPrinter
     /// <summary>
     /// Initializes a new instance of the <see cref="LoanReportPrinter"/> class.
     /// </summary>
-    /// <param name="output">Потік, у який виводиться звіт.</param>
+    /// <param name="output">РџРѕС‚С–Рє, Сѓ СЏРєРёР№ РІРёРІРѕРґРёС‚СЊСЃСЏ Р·РІС–С‚.</param>
     public LoanReportPrinter(TextWriter output)
     {
         ArgumentNullException.ThrowIfNull(output);
         _output = output;
     }
 
-    /// <summary>Записує звіт у потік виводу.</summary>
-    /// <param name="report">Текст звіту, не порожній.</param>
+    /// <summary>Р—Р°РїРёСЃСѓС” Р·РІС–С‚ Сѓ РїРѕС‚С–Рє РІРёРІРѕРґСѓ.</summary>
+    /// <param name="report">РўРµРєСЃС‚ Р·РІС–С‚Сѓ, РЅРµ РїРѕСЂРѕР¶РЅС–Р№.</param>
     public void Print(string report)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(report);

@@ -4,13 +4,13 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Reports;
 
-/// <summary>Формує CSV-звіт про видачі; нічого не пише на диск.</summary>
+/// <summary>Р¤РѕСЂРјСѓС” CSV-Р·РІС–С‚ РїСЂРѕ РІРёРґР°С‡С–; РЅС–С‡РѕРіРѕ РЅРµ РїРёС€Рµ РЅР° РґРёСЃРє.</summary>
 public static class LoanCsvReport
 {
-    /// <summary>Будує текст CSV.</summary>
-    /// <param name="loans">Видачі для звіту.</param>
-    /// <param name="totalOf">Функція розрахунку суми видачі.</param>
-    /// <returns>Текст CSV із заголовком.</returns>
+    /// <summary>Р‘СѓРґСѓС” С‚РµРєСЃС‚ CSV.</summary>
+    /// <param name="loans">Р’РёРґР°С‡С– РґР»СЏ Р·РІС–С‚Сѓ.</param>
+    /// <param name="totalOf">Р¤СѓРЅРєС†С–СЏ СЂРѕР·СЂР°С…СѓРЅРєСѓ СЃСѓРјРё РІРёРґР°С‡С–.</param>
+    /// <returns>РўРµРєСЃС‚ CSV С–Р· Р·Р°РіРѕР»РѕРІРєРѕРј.</returns>
     public static string BuildCsv(IEnumerable<Loan> loans, Func<Loan, decimal> totalOf)
     {
         ArgumentNullException.ThrowIfNull(loans);

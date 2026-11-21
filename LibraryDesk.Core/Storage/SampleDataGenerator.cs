@@ -2,13 +2,13 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Storage;
 
-/// <summary>Генерує відтворювані умовні дані для демонстрації.</summary>
+/// <summary>Р“РµРЅРµСЂСѓС” РІС–РґС‚РІРѕСЂСЋРІР°РЅС– СѓРјРѕРІРЅС– РґР°РЅС– РґР»СЏ РґРµРјРѕРЅСЃС‚СЂР°С†С–С—.</summary>
 public static class SampleDataGenerator
 {
-    /// <summary>Початкове значення генератора.</summary>
+    /// <summary>РџРѕС‡Р°С‚РєРѕРІРµ Р·РЅР°С‡РµРЅРЅСЏ РіРµРЅРµСЂР°С‚РѕСЂР°.</summary>
     public const int SeedValue = 471;
 
-    /// <summary>Створює сто тестових видач для тридцяти умовних читачів.</summary>
+    /// <summary>РЎС‚РІРѕСЂСЋС” СЃС‚Рѕ С‚РµСЃС‚РѕРІРёС… РІРёРґР°С‡ РґР»СЏ С‚СЂРёРґС†СЏС‚Рё СѓРјРѕРІРЅРёС… С‡РёС‚Р°С‡С–РІ.</summary>
     public static IReadOnlyList<Loan> Generate()
     {
         Random random = new(SeedValue);

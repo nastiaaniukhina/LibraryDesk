@@ -31,6 +31,6 @@ public class LoanGuardsTests
     public void EnsureHeaderValid_EmailWithoutAt_ThrowsArgument()
     {
         Assert.Throws<ArgumentException>(
-            () => LoanGuards.EnsureHeaderValid(1, "Р†РІР°РЅРµРЅРєРѕ", "ivanenko.ex.com"));
+            () => LoanGuards.EnsureHeaderValid(1, "Р вЂ Р Р†Р В°Р Р…Р ВµР Р…Р С”Р С•", "ivanenko.ex.com"));
     }
 }

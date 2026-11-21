@@ -1,20 +1,20 @@
 namespace LibraryDesk.Core.Domain;
 
-/// <summary>Стан видачі книжок у її життєвому циклі.</summary>
+/// <summary>РЎС‚Р°РЅ РІРёРґР°С‡С– РєРЅРёР¶РѕРє Сѓ С—С— Р¶РёС‚С‚С”РІРѕРјСѓ С†РёРєР»С–.</summary>
 public enum LoanStatus
 {
-    /// <summary>Книжки заброньовано.</summary>
+    /// <summary>РљРЅРёР¶РєРё Р·Р°Р±СЂРѕРЅСЊРѕРІР°РЅРѕ.</summary>
     Reserved,
 
-    /// <summary>Книжки видано читачеві.</summary>
+    /// <summary>РљРЅРёР¶РєРё РІРёРґР°РЅРѕ С‡РёС‚Р°С‡РµРІС–.</summary>
     Issued,
 
-    /// <summary>Книжки повернено.</summary>
+    /// <summary>РљРЅРёР¶РєРё РїРѕРІРµСЂРЅРµРЅРѕ.</summary>
     Returned,
 
-    /// <summary>Строк повернення минув.</summary>
+    /// <summary>РЎС‚СЂРѕРє РїРѕРІРµСЂРЅРµРЅРЅСЏ РјРёРЅСѓРІ.</summary>
     Overdue,
 
-    /// <summary>Бронь скасовано до видачі.</summary>
+    /// <summary>Р‘СЂРѕРЅСЊ СЃРєР°СЃРѕРІР°РЅРѕ РґРѕ РІРёРґР°С‡С–.</summary>
     Cancelled
 }

@@ -13,7 +13,7 @@ public class LoanReportTests
         LoanTotalResult result = LoanTotalCalculator.Calculate(request);
 
         string text = LoanReport.TextOf(request, result);
-        Assert.Contains("Разом: 1292.70", text);
+        Assert.Contains("Р Р°Р·РѕРј: 1292.70", text);
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class LoanReportTests
         StringWriter writer = new();
         LoanReportPrinter printer = new(writer);
 
-        printer.Print("Р Р°Р·РѕРј: 10.00");
+        printer.Print("Р В Р В°Р В·Р С•Р С: 10.00");
 
         Assert.Contains("10.00", writer.ToString());
     }
@@ -40,7 +40,7 @@ public class LoanReportTests
     {
         return new LoanTotalRequest(
             LoanId: 1,
-            Reader: new ReaderInfo("Іваненко", "i@ex.com", true),
+            Reader: new ReaderInfo("Р†РІР°РЅРµРЅРєРѕ", "i@ex.com", true),
             Lines: new List<LoanLine>
             {
                 new() { Isbn = "ISBN-001", Quantity = 12, UnitPrice = 100m },

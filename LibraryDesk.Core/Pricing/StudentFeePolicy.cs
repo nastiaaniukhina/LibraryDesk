@@ -3,7 +3,7 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Pricing;
 
-/// <summary>Плата для студентів: знижка 10 %.</summary>
+/// <summary>РџР»Р°С‚Р° РґР»СЏ СЃС‚СѓРґРµРЅС‚С–РІ: Р·РЅРёР¶РєР° 10 %.</summary>
 public sealed class StudentFeePolicy : IFeePolicy
 {
     private const decimal Multiplier = 0.90m;

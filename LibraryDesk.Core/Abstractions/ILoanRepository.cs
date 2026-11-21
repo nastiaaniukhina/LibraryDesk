@@ -2,22 +2,22 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Abstractions;
 
-/// <summary>Сховище видач.</summary>
+/// <summary>РЎС…РѕРІРёС‰Рµ РІРёРґР°С‡.</summary>
 public interface ILoanRepository
 {
-    /// <summary>Додає видачу до сховища.</summary>
-    /// <param name="loan">Видача.</param>
+    /// <summary>Р”РѕРґР°С” РІРёРґР°С‡Сѓ РґРѕ СЃС…РѕРІРёС‰Р°.</summary>
+    /// <param name="loan">Р’РёРґР°С‡Р°.</param>
     void Add(Loan loan);
 
-    /// <summary>Шукає видачу за ідентифікатором.</summary>
-    /// <param name="id">Ідентифікатор видачі.</param>
-    /// <returns>Видача або null, якщо її немає.</returns>
+    /// <summary>РЁСѓРєР°С” РІРёРґР°С‡Сѓ Р·Р° С–РґРµРЅС‚РёС„С–РєР°С‚РѕСЂРѕРј.</summary>
+    /// <param name="id">Р†РґРµРЅС‚РёС„С–РєР°С‚РѕСЂ РІРёРґР°С‡С–.</param>
+    /// <returns>Р’РёРґР°С‡Р° Р°Р±Рѕ null, СЏРєС‰Рѕ С—С— РЅРµРјР°С”.</returns>
     Loan? GetById(int id);
 
-    /// <summary>Повертає всі видачі.</summary>
-    /// <returns>Копія списку видач.</returns>
+    /// <summary>РџРѕРІРµСЂС‚Р°С” РІСЃС– РІРёРґР°С‡С–.</summary>
+    /// <returns>РљРѕРїС–СЏ СЃРїРёСЃРєСѓ РІРёРґР°С‡.</returns>
     IReadOnlyList<Loan> GetAll();
 
-    /// <summary>Зберігає поточні зміни.</summary>
+    /// <summary>Р—Р±РµСЂС–РіР°С” РїРѕС‚РѕС‡РЅС– Р·РјС–РЅРё.</summary>
     void Save();
 }

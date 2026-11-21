@@ -4,14 +4,14 @@ using LibraryDesk.Core.Reports;
 
 namespace LibraryDesk.Core.Services;
 
-/// <summary>Виконує пошук видач і побудову звітів.</summary>
+/// <summary>Р’РёРєРѕРЅСѓС” РїРѕС€СѓРє РІРёРґР°С‡ С– РїРѕР±СѓРґРѕРІСѓ Р·РІС–С‚С–РІ.</summary>
 public sealed class LoanQueryService
 {
     private readonly ILoanRepository _repository;
     private readonly IPricingCatalog _pricing;
     private readonly TimeProvider _time;
 
-    /// <summary>Створює сервіс запитів.</summary>
+    /// <summary>РЎС‚РІРѕСЂСЋС” СЃРµСЂРІС–СЃ Р·Р°РїРёС‚С–РІ.</summary>
     public LoanQueryService(ILoanRepository repository, TimeProvider time, IPricingCatalog pricing)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -19,11 +19,11 @@ public sealed class LoanQueryService
         _pricing = pricing ?? throw new ArgumentNullException(nameof(pricing));
     }
 
-    /// <summary>Шукає видачі читача.</summary>
+    /// <summary>РЁСѓРєР°С” РІРёРґР°С‡С– С‡РёС‚Р°С‡Р°.</summary>
     public IReadOnlyList<Loan> FindByReader(int readerId) =>
         _repository.GetAll().Where(loan => loan.ReaderId == readerId).ToList();
 
-    /// <summary>Шукає видачі за ISBN.</summary>
+    /// <summary>РЁСѓРєР°С” РІРёРґР°С‡С– Р·Р° ISBN.</summary>
     public IReadOnlyList<Loan> FindByIsbn(string isbn)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(isbn);
@@ -32,11 +32,11 @@ public sealed class LoanQueryService
             .ToList();
     }
 
-    /// <summary>Формує звіт боржників на дату.</summary>
+    /// <summary>Р¤РѕСЂРјСѓС” Р·РІС–С‚ Р±РѕСЂР¶РЅРёРєС–РІ РЅР° РґР°С‚Сѓ.</summary>
     public IReadOnlyList<DebtorLine> OverdueReport(DateOnly asOf) =>
         OverdueReportBuilder.Build(_repository.GetAll(), asOf, _pricing);
 
-    /// <summary>Формує звіт на поточну дату UTC.</summary>
+    /// <summary>Р¤РѕСЂРјСѓС” Р·РІС–С‚ РЅР° РїРѕС‚РѕС‡РЅСѓ РґР°С‚Сѓ UTC.</summary>
     public IReadOnlyList<DebtorLine> OverdueReport() =>
         OverdueReport(DateOnly.FromDateTime(_time.GetUtcNow().UtcDateTime));
 }

@@ -1,20 +1,20 @@
 namespace LibraryDesk.Core.Domain;
 
 /// <summary>
-/// Забезпечує округлення грошових значень.
+/// Р—Р°Р±РµР·РїРµС‡СѓС” РѕРєСЂСѓРіР»РµРЅРЅСЏ РіСЂРѕС€РѕРІРёС… Р·РЅР°С‡РµРЅСЊ.
 /// </summary>
 public static class Money
 {
     /// <summary>
-    /// Кількість знаків після коми для грошових значень.
+    /// РљС–Р»СЊРєС–СЃС‚СЊ Р·РЅР°РєС–РІ РїС–СЃР»СЏ РєРѕРјРё РґР»СЏ РіСЂРѕС€РѕРІРёС… Р·РЅР°С‡РµРЅСЊ.
     /// </summary>
     public const int Digits = 2;
 
     /// <summary>
-    /// Округлює грошове значення за правилом AwayFromZero.
+    /// РћРєСЂСѓРіР»СЋС” РіСЂРѕС€РѕРІРµ Р·РЅР°С‡РµРЅРЅСЏ Р·Р° РїСЂР°РІРёР»РѕРј AwayFromZero.
     /// </summary>
-    /// <param name="amount">Сума для округлення.</param>
-    /// <returns>Округлена сума.</returns>
+    /// <param name="amount">РЎСѓРјР° РґР»СЏ РѕРєСЂСѓРіР»РµРЅРЅСЏ.</param>
+    /// <returns>РћРєСЂСѓРіР»РµРЅР° СЃСѓРјР°.</returns>
     public static decimal Round(decimal amount)
     {
         return Math.Round(amount, Digits, MidpointRounding.AwayFromZero);

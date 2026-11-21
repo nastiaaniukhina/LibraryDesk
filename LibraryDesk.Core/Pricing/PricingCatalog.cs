@@ -3,13 +3,13 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Pricing;
 
-/// <summary>Каталог профілів розрахунку.</summary>
+/// <summary>РљР°С‚Р°Р»РѕРі РїСЂРѕС„С–Р»С–РІ СЂРѕР·СЂР°С…СѓРЅРєСѓ.</summary>
 public sealed class PricingCatalog : IPricingCatalog
 {
     private readonly IReadOnlyDictionary<ReaderKind, PricingProfile> _profiles;
 
-    /// <summary>Створює каталог профілів.</summary>
-    /// <param name="profiles">Профілі за категоріями читачів.</param>
+    /// <summary>РЎС‚РІРѕСЂСЋС” РєР°С‚Р°Р»РѕРі РїСЂРѕС„С–Р»С–РІ.</summary>
+    /// <param name="profiles">РџСЂРѕС„С–Р»С– Р·Р° РєР°С‚РµРіРѕСЂС–СЏРјРё С‡РёС‚Р°С‡С–РІ.</param>
     public PricingCatalog(IReadOnlyDictionary<ReaderKind, PricingProfile> profiles)
     {
         ArgumentNullException.ThrowIfNull(profiles);
@@ -17,15 +17,15 @@ public sealed class PricingCatalog : IPricingCatalog
     }
 
     /// <inheritdoc/>
-    public PricingProfile For(ReaderKind kind)
+    public PricingProfile GetFor(ReaderKind kind)
     {
         return _profiles.TryGetValue(kind, out PricingProfile? profile)
             ? profile
             : throw new ArgumentOutOfRangeException(nameof(kind));
     }
 
-    /// <summary>Створює стандартний набір політик.</summary>
-    /// <returns>Каталог для Regular, Student і Staff.</returns>
+    /// <summary>РЎС‚РІРѕСЂСЋС” СЃС‚Р°РЅРґР°СЂС‚РЅРёР№ РЅР°Р±С–СЂ РїРѕР»С–С‚РёРє.</summary>
+    /// <returns>РљР°С‚Р°Р»РѕРі РґР»СЏ Regular, Student С– Staff.</returns>
     public static PricingCatalog Default()
     {
         TieredPenaltyPolicy penalty = new();

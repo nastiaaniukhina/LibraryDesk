@@ -1,4 +1,4 @@
-using LibraryDesk.App;
+﻿using LibraryDesk.App;
 using LibraryDesk.Core.Abstractions;
 using LibraryDesk.Core.Notifications;
 using LibraryDesk.Core.Pricing;
@@ -14,7 +14,7 @@ if (args.Length > 0 && args[0] == "seed")
 {
     foreach (var loan in SampleDataGenerator.Generate()) repository.Add(loan);
     repository.Save();
-    return;
+    return 0;
 }
 
 IPricingCatalog pricing = PricingCatalog.Default();
@@ -25,3 +25,5 @@ LoanQueryService queries = new(repository, clock, pricing);
 ScenarioRunner runner = new(log, Console.Out);
 ConsoleMenu menu = new(lifecycle, queries, runner, Console.In, Console.Out);
 return menu.Run();
+
+

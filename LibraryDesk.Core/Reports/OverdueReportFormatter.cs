@@ -2,15 +2,15 @@ using System.Globalization;
 
 namespace LibraryDesk.Core.Reports;
 
-/// <summary>Форматує звіт боржників для текстового виведення.</summary>
+/// <summary>Р¤РѕСЂРјР°С‚СѓС” Р·РІС–С‚ Р±РѕСЂР¶РЅРёРєС–РІ РґР»СЏ С‚РµРєСЃС‚РѕРІРѕРіРѕ РІРёРІРµРґРµРЅРЅСЏ.</summary>
 public static class OverdueReportFormatter
 {
-    /// <summary>Перетворює рядки звіту на текст.</summary>
+    /// <summary>РџРµСЂРµС‚РІРѕСЂСЋС” СЂСЏРґРєРё Р·РІС–С‚Сѓ РЅР° С‚РµРєСЃС‚.</summary>
     public static string Format(IReadOnlyList<DebtorLine> lines)
     {
         ArgumentNullException.ThrowIfNull(lines);
         return string.Join(Environment.NewLine, lines.Select(line =>
             string.Create(CultureInfo.InvariantCulture,
-                $"Видача #{line.LoanId}; читач #{line.ReaderId}; прострочення: {line.OverdueDays}; пеня: {line.Penalty:F2}")));
+                $"Р’РёРґР°С‡Р° #{line.LoanId}; С‡РёС‚Р°С‡ #{line.ReaderId}; РїСЂРѕСЃС‚СЂРѕС‡РµРЅРЅСЏ: {line.OverdueDays}; РїРµРЅСЏ: {line.Penalty:F2}")));
     }
 }

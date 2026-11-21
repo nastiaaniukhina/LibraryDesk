@@ -2,11 +2,11 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Abstractions;
 
-/// <summary>Політика розрахунку плати за позицію видачі.</summary>
+/// <summary>РџРѕР»С–С‚РёРєР° СЂРѕР·СЂР°С…СѓРЅРєСѓ РїР»Р°С‚Рё Р·Р° РїРѕР·РёС†С–СЋ РІРёРґР°С‡С–.</summary>
 public interface IFeePolicy
 {
-    /// <summary>Рахує плату за одну позицію.</summary>
-    /// <param name="item">Позиція видачі.</param>
-    /// <returns>Плата за позицію, грн.</returns>
+    /// <summary>Р Р°С…СѓС” РїР»Р°С‚Сѓ Р·Р° РѕРґРЅСѓ РїРѕР·РёС†С–СЋ.</summary>
+    /// <param name="item">РџРѕР·РёС†С–СЏ РІРёРґР°С‡С–.</param>
+    /// <returns>РџР»Р°С‚Р° Р·Р° РїРѕР·РёС†С–СЋ, РіСЂРЅ.</returns>
     decimal PriceOf(LoanItem item);
 }

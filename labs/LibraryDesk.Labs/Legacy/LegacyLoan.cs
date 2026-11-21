@@ -25,6 +25,6 @@ public class LegacyArchivedLoan : LegacyLoan
 
     public override void AddItem(LegacyLoanItem item)
     {
-        throw new NotSupportedException("Архів змінювати не можна");
+        throw new NotSupportedException("РђСЂС…С–РІ Р·РјС–РЅСЋРІР°С‚Рё РЅРµ РјРѕР¶РЅР°");
     }
 }

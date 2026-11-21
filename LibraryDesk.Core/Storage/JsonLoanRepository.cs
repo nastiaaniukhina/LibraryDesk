@@ -4,13 +4,14 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Storage;
 
-/// <summary>JSON-сховище видач із явним збереженням змін.</summary>
+/// <summary>JSON-СЃС…РѕРІРёС‰Рµ РІРёРґР°С‡ С–Р· СЏРІРЅРёРј Р·Р±РµСЂРµР¶РµРЅРЅСЏРј Р·РјС–РЅ.</summary>
 public sealed class JsonLoanRepository : ILoanRepository
 {
     private readonly string _path;
     private readonly List<Loan> _loans;
+    private static readonly JsonSerializerOptions SerializerOptions = new() { WriteIndented = true };
 
-    /// <summary>Завантажує сховище з файлу або створює порожнє.</summary>
+    /// <summary>Р—Р°РІР°РЅС‚Р°Р¶СѓС” СЃС…РѕРІРёС‰Рµ Р· С„Р°Р№Р»Сѓ Р°Р±Рѕ СЃС‚РІРѕСЂСЋС” РїРѕСЂРѕР¶РЅС”.</summary>
     public JsonLoanRepository(string path)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
@@ -29,7 +30,7 @@ public sealed class JsonLoanRepository : ILoanRepository
     public void Add(Loan loan)
     {
         ArgumentNullException.ThrowIfNull(loan);
-        if (_loans.Any(item => item.Id == loan.Id)) throw new InvalidOperationException("Видача з таким Id уже існує.");
+        if (_loans.Any(item => item.Id == loan.Id)) throw new InvalidOperationException("Р’РёРґР°С‡Р° Р· С‚Р°РєРёРј Id СѓР¶Рµ С–СЃРЅСѓС”.");
         _loans.Add(loan);
     }
 
@@ -45,7 +46,7 @@ public sealed class JsonLoanRepository : ILoanRepository
         string? directory = Path.GetDirectoryName(_path);
         if (!string.IsNullOrEmpty(directory)) Directory.CreateDirectory(directory);
         List<LoanRecord> records = _loans.Select(FromDomain).ToList();
-        File.WriteAllText(_path, JsonSerializer.Serialize(records, new JsonSerializerOptions { WriteIndented = true }));
+        File.WriteAllText(_path, JsonSerializer.Serialize(records, SerializerOptions));
     }
 
     private static LoanRecord FromDomain(Loan loan) => new(

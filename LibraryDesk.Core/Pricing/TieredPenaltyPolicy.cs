@@ -3,7 +3,7 @@ using LibraryDesk.Core.Domain;
 
 namespace LibraryDesk.Core.Pricing;
 
-/// <summary>Багаторівнева політика розрахунку пені.</summary>
+/// <summary>Р‘Р°РіР°С‚РѕСЂС–РІРЅРµРІР° РїРѕР»С–С‚РёРєР° СЂРѕР·СЂР°С…СѓРЅРєСѓ РїРµРЅС–.</summary>
 public sealed class TieredPenaltyPolicy : IPenaltyPolicy
 {
     /// <inheritdoc/>

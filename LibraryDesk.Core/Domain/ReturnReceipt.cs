@@ -1,7 +1,7 @@
 namespace LibraryDesk.Core.Domain;
 
-/// <summary>Підсумок прийняття повернення.</summary>
-/// <param name="Total">Загальна вартість.</param>
-/// <param name="Penalty">Нарахована пеня.</param>
-/// <param name="OverdueDays">Кількість днів прострочення.</param>
+/// <summary>РџС–РґСЃСѓРјРѕРє РїСЂРёР№РЅСЏС‚С‚СЏ РїРѕРІРµСЂРЅРµРЅРЅСЏ.</summary>
+/// <param name="Total">Р—Р°РіР°Р»СЊРЅР° РІР°СЂС‚С–СЃС‚СЊ.</param>
+/// <param name="Penalty">РќР°СЂР°С…РѕРІР°РЅР° РїРµРЅСЏ.</param>
+/// <param name="OverdueDays">РљС–Р»СЊРєС–СЃС‚СЊ РґРЅС–РІ РїСЂРѕСЃС‚СЂРѕС‡РµРЅРЅСЏ.</param>
 public sealed record ReturnReceipt(decimal Total, decimal Penalty, int OverdueDays);

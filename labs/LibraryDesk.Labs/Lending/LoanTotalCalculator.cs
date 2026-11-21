@@ -1,11 +1,11 @@
 namespace LibraryDesk.Labs.Lending;
 
-/// <summary>Р РѕР·СЂР°С…СѓРЅРѕРє РїС–РґСЃСѓРјРєСѓ РІРёРґР°С‡С– Р· СѓСЂР°С…СѓРІР°РЅРЅСЏРј Р·РЅРёР¶РѕРє.</summary>
+/// <summary>Р В Р С•Р В·РЎР‚Р В°РЎвЂ¦РЎС“Р Р…Р С•Р С” Р С—РЎвЂ“Р Т‘РЎРѓРЎС“Р СР С”РЎС“ Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“ Р В· РЎС“РЎР‚Р В°РЎвЂ¦РЎС“Р Р†Р В°Р Р…Р Р…РЎРЏР С Р В·Р Р…Р С‘Р В¶Р С•Р С”.</summary>
 public static class LoanTotalCalculator
 {
-    /// <summary>Р Р°С…СѓС” СЃСѓРјСѓ СЂСЏРґРєС–РІ РІРёРґР°С‡С– Р· СѓСЂР°С…СѓРІР°РЅРЅСЏРј РіСѓСЂС‚РѕРІРѕС— Р·РЅРёР¶РєРё.</summary>
-    /// <param name="lines">Р СЏРґРєРё РІРёРґР°С‡С–, РЅРµ РїРѕСЂРѕР¶РЅС–Р№ РїРµСЂРµР»С–Рє.</param>
-    /// <returns>РЎСѓРјР° РІСЃС–С… СЂСЏРґРєС–РІ РїС–СЃР»СЏ РіСѓСЂС‚РѕРІРёС… Р·РЅРёР¶РѕРє.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ РЎРѓРЎС“Р СРЎС“ РЎР‚РЎРЏР Т‘Р С”РЎвЂ“Р Р† Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“ Р В· РЎС“РЎР‚Р В°РЎвЂ¦РЎС“Р Р†Р В°Р Р…Р Р…РЎРЏР С Р С–РЎС“РЎР‚РЎвЂљР С•Р Р†Р С•РЎвЂ” Р В·Р Р…Р С‘Р В¶Р С”Р С‘.</summary>
+    /// <param name="lines">Р В РЎРЏР Т‘Р С”Р С‘ Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“, Р Р…Р Вµ Р С—Р С•РЎР‚Р С•Р В¶Р Р…РЎвЂ“Р в„– Р С—Р ВµРЎР‚Р ВµР В»РЎвЂ“Р С”.</param>
+    /// <returns>Р РЋРЎС“Р СР В° Р Р†РЎРѓРЎвЂ“РЎвЂ¦ РЎР‚РЎРЏР Т‘Р С”РЎвЂ“Р Р† Р С—РЎвЂ“РЎРѓР В»РЎРЏ Р С–РЎС“РЎР‚РЎвЂљР С•Р Р†Р С‘РЎвЂ¦ Р В·Р Р…Р С‘Р В¶Р С•Р С”.</returns>
     public static decimal SubtotalOf(IReadOnlyList<LoanLine> lines)
     {
         LoanGuards.EnsureLinesValid(lines);
@@ -24,10 +24,10 @@ public static class LoanTotalCalculator
         return subtotal;
     }
 
-    /// <summary>Р Р°С…СѓС” Р·РЅРёР¶РєСѓ РїРѕСЃС‚С–Р№РЅРѕРіРѕ С‡РёС‚Р°С‡Р°.</summary>
-    /// <param name="amount">РџРѕС‚РѕС‡РЅР° СЃСѓРјР°, РЅРµ РІС–Рґ'С”РјРЅР°.</param>
-    /// <param name="isRegularClient">Р§Рё С” С‡РёС‚Р°С‡ РїРѕСЃС‚С–Р№РЅРёРј.</param>
-    /// <returns>РЎСѓРјР° Р·РЅРёР¶РєРё.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ Р В·Р Р…Р С‘Р В¶Р С”РЎС“ Р С—Р С•РЎРѓРЎвЂљРЎвЂ“Р в„–Р Р…Р С•Р С–Р С• РЎвЂЎР С‘РЎвЂљР В°РЎвЂЎР В°.</summary>
+    /// <param name="amount">Р СџР С•РЎвЂљР С•РЎвЂЎР Р…Р В° РЎРѓРЎС“Р СР В°, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р В°.</param>
+    /// <param name="isRegularClient">Р В§Р С‘ РЎвЂќ РЎвЂЎР С‘РЎвЂљР В°РЎвЂЎ Р С—Р С•РЎРѓРЎвЂљРЎвЂ“Р в„–Р Р…Р С‘Р С.</param>
+    /// <returns>Р РЋРЎС“Р СР В° Р В·Р Р…Р С‘Р В¶Р С”Р С‘.</returns>
     public static decimal ClientDiscountOf(decimal amount, bool isRegularClient)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(amount);
@@ -36,9 +36,9 @@ public static class LoanTotalCalculator
             : 0m;
     }
 
-    /// <summary>Р Р°С…СѓС” Р·РЅРёР¶РєСѓ Р·Р° РѕР±СЃСЏРіРѕРј РІРёРґР°С‡С–.</summary>
-    /// <param name="amount">РџРѕС‚РѕС‡РЅР° СЃСѓРјР°, РЅРµ РІС–Рґ'С”РјРЅР°.</param>
-    /// <returns>РЎСѓРјР° Р·РЅРёР¶РєРё.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ Р В·Р Р…Р С‘Р В¶Р С”РЎС“ Р В·Р В° Р С•Р В±РЎРѓРЎРЏР С–Р С•Р С Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“.</summary>
+    /// <param name="amount">Р СџР С•РЎвЂљР С•РЎвЂЎР Р…Р В° РЎРѓРЎС“Р СР В°, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р В°.</param>
+    /// <returns>Р РЋРЎС“Р СР В° Р В·Р Р…Р С‘Р В¶Р С”Р С‘.</returns>
     public static decimal VolumeDiscountOf(decimal amount)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(amount);
@@ -55,10 +55,10 @@ public static class LoanTotalCalculator
         return 0m;
     }
 
-    /// <summary>Р Р°С…СѓС” Р·РЅРёР¶РєСѓ Р·Р° РєРѕРґРѕРј РєСѓРїРѕРЅР°.</summary>
-    /// <param name="amount">РџРѕС‚РѕС‡РЅР° СЃСѓРјР°, РЅРµ РІС–Рґ'С”РјРЅР°.</param>
-    /// <param name="couponCode">РљРѕРґ РєСѓРїРѕРЅР° Р°Р±Рѕ null, СЏРєС‰Рѕ РєСѓРїРѕРЅР° РЅРµРјР°С”.</param>
-    /// <returns>РЎСѓРјР° Р·РЅРёР¶РєРё.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ Р В·Р Р…Р С‘Р В¶Р С”РЎС“ Р В·Р В° Р С”Р С•Р Т‘Р С•Р С Р С”РЎС“Р С—Р С•Р Р…Р В°.</summary>
+    /// <param name="amount">Р СџР С•РЎвЂљР С•РЎвЂЎР Р…Р В° РЎРѓРЎС“Р СР В°, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р В°.</param>
+    /// <param name="couponCode">Р С™Р С•Р Т‘ Р С”РЎС“Р С—Р С•Р Р…Р В° Р В°Р В±Р С• null, РЎРЏР С”РЎвЂ°Р С• Р С”РЎС“Р С—Р С•Р Р…Р В° Р Р…Р ВµР СР В°РЎвЂќ.</param>
+    /// <returns>Р РЋРЎС“Р СР В° Р В·Р Р…Р С‘Р В¶Р С”Р С‘.</returns>
     public static decimal CouponDiscountOf(decimal amount, string? couponCode)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(amount);
@@ -73,10 +73,10 @@ public static class LoanTotalCalculator
         };
     }
 
-    /// <summary>Р Р°С…СѓС” Р·РЅРёР¶РєСѓ РІРёС…С–РґРЅРѕРіРѕ РґРЅСЏ.</summary>
-    /// <param name="amount">РџРѕС‚РѕС‡РЅР° СЃСѓРјР°, РЅРµ РІС–Рґ'С”РјРЅР°.</param>
-    /// <param name="createdAt">Р”Р°С‚Р° СЃС‚РІРѕСЂРµРЅРЅСЏ РІРёРґР°С‡С–.</param>
-    /// <returns>РЎСѓРјР° Р·РЅРёР¶РєРё.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ Р В·Р Р…Р С‘Р В¶Р С”РЎС“ Р Р†Р С‘РЎвЂ¦РЎвЂ“Р Т‘Р Р…Р С•Р С–Р С• Р Т‘Р Р…РЎРЏ.</summary>
+    /// <param name="amount">Р СџР С•РЎвЂљР С•РЎвЂЎР Р…Р В° РЎРѓРЎС“Р СР В°, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р В°.</param>
+    /// <param name="createdAt">Р вЂќР В°РЎвЂљР В° РЎРѓРЎвЂљР Р†Р С•РЎР‚Р ВµР Р…Р Р…РЎРЏ Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“.</param>
+    /// <returns>Р РЋРЎС“Р СР В° Р В·Р Р…Р С‘Р В¶Р С”Р С‘.</returns>
     public static decimal WeekendDiscountOf(decimal amount, DateOnly createdAt)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(amount);
@@ -85,10 +85,10 @@ public static class LoanTotalCalculator
             : 0m;
     }
 
-    /// <summary>Р Р°С…СѓС” РїР»Р°С‚Сѓ Р·Р° РґРѕСЃС‚Р°РІРєСѓ.</summary>
-    /// <param name="amount">РџРѕС‚РѕС‡РЅР° СЃСѓРјР°, РЅРµ РІС–Рґ'С”РјРЅР°.</param>
-    /// <param name="deliveryPrice">Р’Р°СЂС‚С–СЃС‚СЊ РґРѕСЃС‚Р°РІРєРё, РЅРµ РІС–Рґ'С”РјРЅР°.</param>
-    /// <returns>РџР»Р°С‚Р° Р·Р° РґРѕСЃС‚Р°РІРєСѓ Р°Р±Рѕ РЅСѓР»СЊ, СЏРєС‰Рѕ РґРѕСЃС‚Р°РІРєР° Р±РµР·РєРѕС€С‚РѕРІРЅР°.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ Р С—Р В»Р В°РЎвЂљРЎС“ Р В·Р В° Р Т‘Р С•РЎРѓРЎвЂљР В°Р Р†Р С”РЎС“.</summary>
+    /// <param name="amount">Р СџР С•РЎвЂљР С•РЎвЂЎР Р…Р В° РЎРѓРЎС“Р СР В°, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р В°.</param>
+    /// <param name="deliveryPrice">Р вЂ™Р В°РЎР‚РЎвЂљРЎвЂ“РЎРѓРЎвЂљРЎРЉ Р Т‘Р С•РЎРѓРЎвЂљР В°Р Р†Р С”Р С‘, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р В°.</param>
+    /// <returns>Р СџР В»Р В°РЎвЂљР В° Р В·Р В° Р Т‘Р С•РЎРѓРЎвЂљР В°Р Р†Р С”РЎС“ Р В°Р В±Р С• Р Р…РЎС“Р В»РЎРЉ, РЎРЏР С”РЎвЂ°Р С• Р Т‘Р С•РЎРѓРЎвЂљР В°Р Р†Р С”Р В° Р В±Р ВµР В·Р С”Р С•РЎв‚¬РЎвЂљР С•Р Р†Р Р…Р В°.</returns>
     public static decimal DeliveryFeeOf(decimal amount, decimal deliveryPrice)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(amount);
@@ -98,10 +98,10 @@ public static class LoanTotalCalculator
             : 0m;
     }
 
-    /// <summary>Р’РёР·РЅР°С‡Р°С” РЅР°СЃС‚СѓРїРЅРёР№ СЃС‚Р°РЅ С„РѕСЂРјСѓР»СЏСЂР° РІРёРґР°С‡С–.</summary>
-    /// <param name="current">РџРѕС‚РѕС‡РЅРёР№ СЃС‚Р°РЅ.</param>
-    /// <param name="total">РџС–РґСЃСѓРјРѕРє РІРёРґР°С‡С–, РЅРµ РІС–Рґ'С”РјРЅРёР№.</param>
-    /// <returns>РќР°СЃС‚СѓРїРЅРёР№ СЃС‚Р°РЅ; СЏРєС‰Рѕ РїРµСЂРµС…С–Рґ РЅРµРјРѕР¶Р»РёРІРёР№, С‚Рѕ РїРѕС‚РѕС‡РЅРёР№.</returns>
+    /// <summary>Р вЂ™Р С‘Р В·Р Р…Р В°РЎвЂЎР В°РЎвЂќ Р Р…Р В°РЎРѓРЎвЂљРЎС“Р С—Р Р…Р С‘Р в„– РЎРѓРЎвЂљР В°Р Р… РЎвЂћР С•РЎР‚Р СРЎС“Р В»РЎРЏРЎР‚Р В° Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“.</summary>
+    /// <param name="current">Р СџР С•РЎвЂљР С•РЎвЂЎР Р…Р С‘Р в„– РЎРѓРЎвЂљР В°Р Р….</param>
+    /// <param name="total">Р СџРЎвЂ“Р Т‘РЎРѓРЎС“Р СР С•Р С” Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“, Р Р…Р Вµ Р Р†РЎвЂ“Р Т‘'РЎвЂќР СР Р…Р С‘Р в„–.</param>
+    /// <returns>Р СњР В°РЎРѓРЎвЂљРЎС“Р С—Р Р…Р С‘Р в„– РЎРѓРЎвЂљР В°Р Р…; РЎРЏР С”РЎвЂ°Р С• Р С—Р ВµРЎР‚Р ВµРЎвЂ¦РЎвЂ“Р Т‘ Р Р…Р ВµР СР С•Р В¶Р В»Р С‘Р Р†Р С‘Р в„–, РЎвЂљР С• Р С—Р С•РЎвЂљР С•РЎвЂЎР Р…Р С‘Р в„–.</returns>
     public static LoanFormStatus NextStatusOf(LoanFormStatus current, decimal total)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(total);
@@ -113,9 +113,9 @@ public static class LoanTotalCalculator
         };
     }
 
-    /// <summary>Р Р°С…СѓС” РїС–РґСЃСѓРјРѕРє РІРёРґР°С‡С– Р№ РЅР°СЃС‚СѓРїРЅРёР№ СЃС‚Р°РЅ С„РѕСЂРјСѓР»СЏСЂР°.</summary>
-    /// <param name="request">Р—Р°РїРёС‚ РЅР° СЂРѕР·СЂР°С…СѓРЅРѕРє.</param>
-    /// <returns>РџС–РґСЃСѓРјРѕРє С– СЃС‚Р°РЅ РІРёРґР°С‡С– РїС–СЃР»СЏ СЂРѕР·СЂР°С…СѓРЅРєСѓ.</returns>
+    /// <summary>Р В Р В°РЎвЂ¦РЎС“РЎвЂќ Р С—РЎвЂ“Р Т‘РЎРѓРЎС“Р СР С•Р С” Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“ Р в„– Р Р…Р В°РЎРѓРЎвЂљРЎС“Р С—Р Р…Р С‘Р в„– РЎРѓРЎвЂљР В°Р Р… РЎвЂћР С•РЎР‚Р СРЎС“Р В»РЎРЏРЎР‚Р В°.</summary>
+    /// <param name="request">Р вЂ”Р В°Р С—Р С‘РЎвЂљ Р Р…Р В° РЎР‚Р С•Р В·РЎР‚Р В°РЎвЂ¦РЎС“Р Р…Р С•Р С”.</param>
+    /// <returns>Р СџРЎвЂ“Р Т‘РЎРѓРЎС“Р СР С•Р С” РЎвЂ“ РЎРѓРЎвЂљР В°Р Р… Р Р†Р С‘Р Т‘Р В°РЎвЂЎРЎвЂ“ Р С—РЎвЂ“РЎРѓР В»РЎРЏ РЎР‚Р С•Р В·РЎР‚Р В°РЎвЂ¦РЎС“Р Р…Р С”РЎС“.</returns>
     public static LoanTotalResult Calculate(LoanTotalRequest request)
     {
         LoanGuards.EnsureRequestValid(request);

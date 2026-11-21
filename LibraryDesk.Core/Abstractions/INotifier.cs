@@ -1,10 +1,10 @@
 namespace LibraryDesk.Core.Abstractions;
 
-/// <summary>Сповіщувач про події видачі.</summary>
+/// <summary>РЎРїРѕРІС–С‰СѓРІР°С‡ РїСЂРѕ РїРѕРґС–С— РІРёРґР°С‡С–.</summary>
 public interface INotifier
 {
-    /// <summary>Надсилає повідомлення отримувачу.</summary>
-    /// <param name="recipient">Адреса отримувача.</param>
-    /// <param name="message">Текст повідомлення.</param>
+    /// <summary>РќР°РґСЃРёР»Р°С” РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ РѕС‚СЂРёРјСѓРІР°С‡Сѓ.</summary>
+    /// <param name="recipient">РђРґСЂРµСЃР° РѕС‚СЂРёРјСѓРІР°С‡Р°.</param>
+    /// <param name="message">РўРµРєСЃС‚ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ.</param>
     void Notify(string recipient, string message);
 }
