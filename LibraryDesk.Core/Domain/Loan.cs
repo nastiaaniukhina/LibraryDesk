@@ -9,7 +9,7 @@ public sealed class Loan
     /// <param name="id">Ідентифікатор видачі, більший за нуль.</param>
     /// <param name="readerId">Ідентифікатор читача, більший за нуль.</param>
     /// <param name="createdAt">Час створення видачі.</param>
-    public Loan(int id, int readerId, DateTimeOffset createdAt)
+    public Loan(int id, int readerId, DateTimeOffset createdAt, ReaderKind readerKind = ReaderKind.Regular)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(id);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(readerId);
@@ -17,6 +17,7 @@ public sealed class Loan
         Id = id;
         ReaderId = readerId;
         CreatedAt = createdAt;
+        ReaderKind = readerKind;
         Status = LoanStatus.Reserved;
     }
 
@@ -28,6 +29,9 @@ public sealed class Loan
 
     /// <summary>Gets час створення видачі.</summary>
     public DateTimeOffset CreatedAt { get; }
+
+    /// <summary>Gets категорію читача.</summary>
+    public ReaderKind ReaderKind { get; private set; }
 
     /// <summary>Gets поточний стан видачі.</summary>
     public LoanStatus Status { get; private set; }
@@ -116,6 +120,38 @@ public sealed class Loan
 
         ReturnedAt = now;
         Status = LoanStatus.Returned;
+    }
+
+    /// <summary>Відновлює видачу зі збереженого запису.</summary>
+    /// <param name="id">Ідентифікатор видачі.</param>
+    /// <param name="readerId">Ідентифікатор читача.</param>
+    /// <param name="createdAt">Час створення.</param>
+    /// <param name="kind">Категорія читача.</param>
+    /// <param name="status">Збережений стан.</param>
+    /// <param name="dueAt">Строк повернення.</param>
+    /// <param name="returnedAt">Час повернення.</param>
+    /// <param name="items">Позиції видачі.</param>
+    /// <returns>Відновлена видача.</returns>
+    internal static Loan Restore(
+        int id,
+        int readerId,
+        DateTimeOffset createdAt,
+        ReaderKind kind,
+        LoanStatus status,
+        DateTimeOffset? dueAt,
+        DateTimeOffset? returnedAt,
+        IEnumerable<LoanItem> items)
+    {
+        Loan loan = new(id, readerId, createdAt, kind);
+        foreach (LoanItem item in items)
+        {
+            loan._items.Add(item);
+        }
+
+        loan.Status = status;
+        loan.DueAt = dueAt;
+        loan.ReturnedAt = returnedAt;
+        return loan;
     }
 
     /// <summary>Скасовує бронь, поки книжки не видано.</summary>

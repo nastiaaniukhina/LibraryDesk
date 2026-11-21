@@ -17,4 +17,7 @@ public interface ILoanRepository
     /// <summary>Повертає всі видачі.</summary>
     /// <returns>Копія списку видач.</returns>
     IReadOnlyList<Loan> GetAll();
+
+    /// <summary>Зберігає поточні зміни.</summary>
+    void Save();
 }

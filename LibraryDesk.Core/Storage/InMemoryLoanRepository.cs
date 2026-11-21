@@ -23,4 +23,9 @@ public sealed class InMemoryLoanRepository : ILoanRepository
 
     /// <inheritdoc/>
     public IReadOnlyList<Loan> GetAll() => _loans.Values.ToList();
+
+    /// <inheritdoc/>
+    public void Save()
+    {
+    }
 }
