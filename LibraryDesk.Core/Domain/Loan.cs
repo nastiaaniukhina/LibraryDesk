@@ -35,6 +35,9 @@ public sealed class Loan
     /// <summary>Gets кінцевий строк повернення; null, поки книжки не видано.</summary>
     public DateTimeOffset? DueAt { get; private set; }
 
+    /// <summary>Gets момент повернення; null, поки книжки не повернуто.</summary>
+    public DateTimeOffset? ReturnedAt { get; private set; }
+
     /// <summary>Gets позиції видачі лише для читання.</summary>
     public IReadOnlyList<LoanItem> Items => _items.AsReadOnly();
 
@@ -87,8 +90,23 @@ public sealed class Loan
         Status = LoanStatus.Overdue;
     }
 
+    /// <summary>Обчислює кількість календарних днів прострочення на вказану дату.</summary>
+    /// <param name="asOf">Дата, на яку обчислюється прострочення.</param>
+    /// <returns>Кількість днів прострочення, але не менше нуля.</returns>
+    public int OverdueDaysAt(DateOnly asOf)
+    {
+        if (DueAt is not DateTimeOffset dueAt)
+        {
+            return 0;
+        }
+
+        DateOnly dueDate = DateOnly.FromDateTime(dueAt.DateTime);
+        return Math.Max(asOf.DayNumber - dueDate.DayNumber, 0);
+    }
+
     /// <summary>Повертає видачу зі станів Issued або Overdue.</summary>
-    public void Return()
+    /// <param name="now">Момент повернення книжок.</param>
+    public void Return(DateTimeOffset now)
     {
         if (Status is not (LoanStatus.Issued or LoanStatus.Overdue))
         {
@@ -96,6 +114,7 @@ public sealed class Loan
                 "Повернути можна лише видану або прострочену видачу.");
         }
 
+        ReturnedAt = now;
         Status = LoanStatus.Returned;
     }
 

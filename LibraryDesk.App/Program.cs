@@ -41,7 +41,7 @@ Console.WriteLine($"Видача #{loan.Id}, політика: {readerType}");
 Console.WriteLine($"Стан: {loan.Status}");
 Console.WriteLine($"Сума: {total}");
 
-loan.Return();
+loan.Return(now);
 ArchivedLoan archived = new(loan, now);
 Console.WriteLine($"Архів: видача #{archived.Id}, стан {archived.Status}");
 Console.Write(LoanCsvReport.BuildCsv(repository.GetAll(), service.TotalOf));
