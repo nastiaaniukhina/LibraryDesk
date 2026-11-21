@@ -22,7 +22,7 @@ public class DomainInvariantTests
         loan.AddItem(new LoanItem("ISBN-001", 7, 1m));
         loan.Issue(DateTimeOffset.UtcNow);
 
-        Assert.Throws<InvalidOperationException>(
+        Assert.Throws<InvalidLoanStateException>(
             () => loan.AddItem(new LoanItem("ISBN-002", 1, 1m)));
     }
 

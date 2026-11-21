@@ -10,6 +10,6 @@ public sealed class StandardFeePolicy : IFeePolicy
     public decimal PriceOf(LoanItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
-        return Math.Round(item.Amount, 2);
+        return item.Amount;
     }
 }

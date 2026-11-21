@@ -12,6 +12,6 @@ public sealed class StudentFeePolicy : IFeePolicy
     public decimal PriceOf(LoanItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
-        return Math.Round(item.Amount * Multiplier, 2);
+        return item.Amount * Multiplier;
     }
 }

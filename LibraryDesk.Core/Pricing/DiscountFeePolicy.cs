@@ -23,6 +23,6 @@ public sealed class DiscountFeePolicy : IFeePolicy
     public decimal PriceOf(LoanItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
-        return Math.Round(item.Amount * (1m - _rate), 2);
+        return item.Amount * (1m - _rate);
     }
 }

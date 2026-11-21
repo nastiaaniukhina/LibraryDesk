@@ -54,6 +54,6 @@ public sealed class LoanService
             total += _feePolicy.PriceOf(item);
         }
 
-        return total;
+        return Money.Round(total);
     }
 }
