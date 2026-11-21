@@ -135,3 +135,13 @@ CODING_STANDARD.md — Reader, Loan, LoanItem, LoanStatus, ISBN, DueAt, DailyRat
 | 1–7 | студент | 0,25 × DailyRate |
 | 8 і більше | звичайний | 1 × DailyRate |
 | 8 і більше | студент | 0,5 × DailyRate |
+
+## 4. Таблиця переходів станів
+
+| Стан / Подія | Issue | MarkOverdue | Return | Cancel |
+| --- | --- | --- | --- | --- |
+| Reserved | Issued | заборонено | заборонено | Cancelled |
+| Issued | заборонено | Overdue | Returned | заборонено |
+| Overdue | заборонено | заборонено | Returned | заборонено |
+| Returned | заборонено | заборонено | заборонено | заборонено |
+| Cancelled | заборонено | заборонено | заборонено | заборонено |
