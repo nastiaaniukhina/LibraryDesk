@@ -45,7 +45,7 @@ public sealed class Loan
         ArgumentNullException.ThrowIfNull(item);
         if (Status != LoanStatus.Reserved)
         {
-            throw new InvalidOperationException(
+            throw new InvalidLoanStateException(
                 "Додавати книжки можна лише до заброньованої видачі.");
         }
 
@@ -58,12 +58,12 @@ public sealed class Loan
     {
         if (Status != LoanStatus.Reserved)
         {
-            throw new InvalidOperationException("Видати можна лише заброньовану видачу.");
+            throw new InvalidLoanStateException("Видати можна лише заброньовану видачу.");
         }
 
         if (_items.Count == 0)
         {
-            throw new InvalidOperationException("Видача не містить жодної книжки.");
+            throw new InvalidLoanStateException("Видача не містить жодної книжки.");
         }
 
         DueAt = now.AddDays(_items.Max(item => item.Days));
@@ -76,12 +76,12 @@ public sealed class Loan
     {
         if (Status != LoanStatus.Issued)
         {
-            throw new InvalidOperationException("Прострочити можна лише видану видачу.");
+            throw new InvalidLoanStateException("Прострочити можна лише видану видачу.");
         }
 
         if (DueAt is not DateTimeOffset due || now < due)
         {
-            throw new InvalidOperationException("Строк повернення ще не минув.");
+            throw new InvalidLoanStateException("Строк повернення ще не минув.");
         }
 
         Status = LoanStatus.Overdue;
@@ -92,7 +92,7 @@ public sealed class Loan
     {
         if (Status is not (LoanStatus.Issued or LoanStatus.Overdue))
         {
-            throw new InvalidOperationException(
+            throw new InvalidLoanStateException(
                 "Повернути можна лише видану або прострочену видачу.");
         }
 
@@ -104,7 +104,7 @@ public sealed class Loan
     {
         if (Status != LoanStatus.Reserved)
         {
-            throw new InvalidOperationException("Скасувати можна лише заброньовану видачу.");
+            throw new InvalidLoanStateException("Скасувати можна лише заброньовану видачу.");
         }
 
         Status = LoanStatus.Cancelled;
